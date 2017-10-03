@@ -1,13 +1,16 @@
 (function () {
 
     angular.module("myapp", [])
+
+
+
         .controller("quizCtrl", ['$rootScope', function ($rootScope) {
              var self = this;
-            // $rootScope.state = "NORMAL";
+             $rootScope.state = "NORMAL";
             //
-            // self.changeMode = function() {
-            //     $rootScope.state = ($rootScope.state == "NORMAL") ? "EDIT" : "NORMAL";
-            // };
+             self.changeMode = function() {
+                 $rootScope.state = ($rootScope.state == "NORMAL") ? "EDIT" : "NORMAL";
+             };
             //
             // self.showNormalMode = function() {
             //     return $rootScope.state == "NORMAL";
@@ -181,4 +184,37 @@
 
 
         }])
+
+
+        .controller("editController", ['$rootScope', function ($rootScope) {
+
+            var qcm = [];
+            $rootScope.qcm = qcm;
+
+            var self = this;
+            self.showInputQCM = false;
+
+            self.addQCM = function() {
+                self.showInputQCM = true;
+            };
+
+            self.shouldShowInputQCM = function() {
+                return self.showInputQCM;
+            };
+
+            self.showEditMode = function() {
+                return $rootScope.state == "EDIT";
+            };
+
+            self.submitQcm = function() {
+                self.showInputQCM = false;
+                qcm.push(self.qcmTitle);
+                self.qcmTitle = "";
+            };
+
+            self.getQcm = function() {
+                return qcm;
+            }
+
+        }]);
 }());
