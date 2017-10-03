@@ -9,7 +9,8 @@
         <div>
             <ul>
                <li ng-repeat="note in quiz.data" style="margin-bottom: 20px">
-                   <button class="btn btn-primary" ng-click="quiz.selectNote(note)">{{note.title}}</button>
+                   <button class="btn" ng-class="quiz.showFinishedQuestion(note)"
+                           ng-click="quiz.selectNote(note)">{{note.title}}</button>
                </li>
             </ul>
         </div>

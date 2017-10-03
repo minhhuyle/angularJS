@@ -112,7 +112,16 @@
 			self.shouldShowScore = function() {
 				if(self.currentQuestion == undefined) return false;
 				return (self.selectData) && self.currentQuestion >= self.selectData.questions.length;
-			}
+			};
+
+			self.showFinishedQuestion = function(question){
+				if((self.selectData) && question.title == self.selectData.title){
+					return (self.shouldShowScore()) && "btn-success";
+				}
+				return false;
+			};
+
+
 
 			self.showScore = function() {
 				return self.score;
@@ -120,7 +129,7 @@
 
 			self.showLevel = function() {
 				if(self.score == 0) return "text-danger";
-				else if(self.score == self.selectData.questions.length) return "text-success";
+				else if((self.selectData) && self.score == self.selectData.questions.length) return "text-success";
 				return "text-info";
 			}
 
