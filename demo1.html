@@ -14,14 +14,15 @@
             </ul>
         </div>
 
-        <div ng-show="quiz.shouldShowSelectedData()">
+        <div ng-if="quiz.shouldShowSelectedData()">
             <h3>{{quiz.selectData.title}} Selectionné</h3>
-            <h2>Test</h2>
+            <h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>
             <p>{{quiz.showQuestion()}}</p>
             <ul>
                 <button ng-click="quiz.changeCurrentQuestion(reponse)" ng-repeat="reponse in quiz.getReponses()">{{reponse}}</button>
             </ul>
         </div>
+        <div ng-show="quiz.shouldShowScore()" ng-class="quiz.showLevel()">Score : {{quiz.showScore()}}</div>
 
 
     </div>

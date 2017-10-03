@@ -13,7 +13,7 @@
                         good: "A"
                     },
                         {
-                            enonce: "ABHHBHBB",
+                            enonce: "ABHklkHBHBB",
                             reponses:["A", "B", "C", "D"],
                             good: "B"
                         },{
@@ -80,9 +80,9 @@
             self.shouldShowSelectedData = function(){
 
             	if(self.selectData != null) {
-                   /*if(self.currentQuestion >= self.selectData.questions.length) {
+                   if(self.currentQuestion >= self.selectData.questions.length) {
 					   return null;
-				   }*/
+				   }
 
 				   return true;
                 }
@@ -96,7 +96,11 @@
 
 			self.getReponses = function(){
             	return (self.selectData) && self.selectData.questions[self.currentQuestion].reponses;
-			}
+			};
+
+			self.getIndexOfQuestion = function(){
+				return self.currentQuestion+1;
+			};
 
 			self.changeCurrentQuestion = function(reponse){
 				if(reponse == self.selectData.questions[self.currentQuestion].good) {
@@ -105,6 +109,20 @@
 				self.currentQuestion ++;
 			}
 
+			self.shouldShowScore = function() {
+				if(self.currentQuestion == undefined) return false;
+				return (self.selectData) && self.currentQuestion >= self.selectData.questions.length;
+			}
+
+			self.showScore = function() {
+				return self.score;
+			}
+
+			self.showLevel = function() {
+				if(self.score == 0) return "text-danger";
+				else if(self.score == self.selectData.questions.length) return "text-success";
+				return "text-info";
+			}
 
 		}])
 }());
