@@ -1,11 +1,24 @@
-<html ng-app>
+<html ng-app="myapp">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+</head>
 <body>
-	<input type="text" ng-model="name"/>
+    <div ng-controller="quizCtrl as quiz">
+        <div>
+            <ul>
+               <li ng-repeat="note in quiz.data" >
+                   <button ng-click="quiz.selectNote(note)">{{note.title}}</button>
+               </li>
+            </ul>
+        </div>
 
-	<h2>
-		Hello <span ng-bind="name"></span>
-	</h2>
+        <div ng-hide="quiz.selectData == null">
+            <h3>{{quiz.selectData.title}} Selectionné</h3>
+        </div>
 
+    </div>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+	<script src="app.js"></script>
 </body>
 </html>
