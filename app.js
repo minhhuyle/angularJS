@@ -1,9 +1,17 @@
 (function () {
 
     angular.module("myapp", [])
-        .controller("quizCtrl", [function () {
-            var self = this;
-
+        .controller("quizCtrl", ['$rootScope', function ($rootScope) {
+             var self = this;
+            // $rootScope.state = "NORMAL";
+            //
+            // self.changeMode = function() {
+            //     $rootScope.state = ($rootScope.state == "NORMAL") ? "EDIT" : "NORMAL";
+            // };
+            //
+            // self.showNormalMode = function() {
+            //     return $rootScope.state == "NORMAL";
+            // };
 
             self.data = [
                 {

@@ -5,8 +5,8 @@
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 </head>
 <body>
-<!--
-   <div ng-controller="quizCtrl as quiz">
+   <div ng-if="false" ng-controller="quizCtrl as quiz">
+       <button class="btn">"Mode normal"</button>
         <div>
             <ul>
                <li ng-repeat="quizChosen in quiz.data" style="margin-bottom: 20px">
@@ -36,20 +36,22 @@
             </ul>
         </div>
     </div>
--->
-    <div ng-controller="editController as edit">
-        <button class="btn">Mode Edition</button>
-        <ul>
-            <li></li>
-        </ul>
-        <button class="btn">Créer</button>
-        <div ng-show="true">
-            <p>QCM : <input type="text"></p>
-        </div>
-
+<div ng-controller="editController as edit">
+    <button class="btn">Mode Edition</button>
+    <ul>
+        <li ng-repeat="quiz in edit.getQcm()">{{quiz}}</li>
+    </ul>
+    <button class="btn" ng-click="edit.addQCM()">Créer</button>
+    <div ng-show="edit.shouldShowInputQCM()">
+        <form ng-submit="edit.submitQcm()" name="newQcm">
+            <p>QCM : <input ng-model="edit.qcmTitle" required type="text"></p>
+            <button ng-disabled="newQcm.$invalid" type="submit" class="btn">Valider</button>
+        </form>
     </div>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
-	<!--<script src="app.js"></script>-->
-	<script src="app2.js"></script>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+<!--<script src="app.js"></script>-->
+<script src="app2.js"></script>
 </body>
 </html>
