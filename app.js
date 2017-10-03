@@ -1,5 +1,3 @@
-'use strict'
-
 (function(){
 
 	angular.module("myapp", [])
@@ -18,8 +16,7 @@
                             enonce: "ABHHBHBB",
                             reponses:["A", "B", "C", "D"],
                             good: "B"
-                        }],
-                    questions: [{
+                        },{
                         enonce: "Ckdoskdlskdd",
                         reponses:["A", "B", "C", "D"],
                         good: "C"
@@ -39,8 +36,7 @@
                             enonce: "ABHHBHBB",
                             reponses:["A", "B", "C", "D"],
                             good: "B"
-                        }],
-                    questions: [{
+                        },{
                         enonce: "Ckdoskdlskdd",
                         reponses:["A", "B", "C", "D"],
                         good: "C"
@@ -60,8 +56,7 @@
                             enonce: "ABHHBHBB",
                             reponses:["A", "B", "C", "D"],
                             good: "B"
-                        }],
-                    questions: [{
+                        },{
                         enonce: "Ckdoskdlskdd",
                         reponses:["A", "B", "C", "D"],
                         good: "C"
@@ -83,20 +78,24 @@
 			};
 
             self.shouldShowSelectedData = function(){
+
             	if(self.selectData != null) {
-                    if(self.currentQuestion >= self.selectData.questions.length) {
-                        return null;
-                    }
-                    return self.selectData != null;
+                   /*if(self.currentQuestion >= self.selectData.questions.length) {
+					   return null;
+				   }*/
+
+				   return true;
                 }
+
+                return null
             };
 
             self.showQuestion = function(){
-            	return self.selectData.questions[self.currentQuestion].enonce;
+				return (self.selectData) && self.selectData.questions[self.currentQuestion].enonce;
 			};
 
 			self.getReponses = function(){
-            	return self.selectData.questions[self.currentQuestion].reponses;
+            	return (self.selectData) && self.selectData.questions[self.currentQuestion].reponses;
 			}
 
 			self.changeCurrentQuestion = function(reponse){
