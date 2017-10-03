@@ -1,20 +1,17 @@
 (function () {
 
     angular.module("myapp", [])
+        .controller("managerCtrl", [function () {
+            var self = this;
+            self.state = "NORMAL";
 
-
+            self.changeMode = function() {
+                self.state = (self.state == "NORMAL") ? "EDIT" : "NORMAL";
+            };
+        }])
 
         .controller("quizCtrl", ['$rootScope', function ($rootScope) {
              var self = this;
-             $rootScope.state = "NORMAL";
-            //
-             self.changeMode = function() {
-                 $rootScope.state = ($rootScope.state == "NORMAL") ? "EDIT" : "NORMAL";
-             };
-            //
-            // self.showNormalMode = function() {
-            //     return $rootScope.state == "NORMAL";
-            // };
 
             self.data = [
                 {
