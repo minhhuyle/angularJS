@@ -30,9 +30,8 @@
             <h3>{{quiz.selectData.title}}</h3>
             <h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>
             <ul>
-                <button ng-class="quiz.showColorResponse(reponse, {{$index}})" ng-repeat="reponse in quiz.getReponses()"
-                        ng-click="quiz.replayNextQuestion()"
-                    >{{reponse}}</button>
+                <button ng-class="quiz.showColorResponse(reponse)" ng-repeat="reponse in quiz.getReponses()"
+                        ng-click="quiz.replayNextQuestion()">{{reponse}}</button>
             </ul>
         </div>
     </div>

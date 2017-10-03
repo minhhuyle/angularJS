@@ -160,7 +160,7 @@
             };
 
 
-            self.showColorResponse = function (reponse, index) {
+            self.showColorResponse = function (reponse) {
                 var myResponse = self.questionsAnswer[self.currentQuestion];
                 var goodResponse = self.selectData.questions[self.currentQuestion].good;
                 if(reponse == myResponse){
