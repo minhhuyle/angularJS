@@ -11,7 +11,18 @@
         }])
 
         .controller("quizCtrl", ['$rootScope', function ($rootScope) {
-             var self = this;
+            var self = this;
+            $rootScope.state = "NORMAL";
+
+            self.changeMode = function() {
+                $rootScope.state = "EDIT";
+            };
+
+            self.shouldShowNormalMode = function(){
+                return $rootScope.state == "NORMAL";
+            };
+
+
 
             self.data = [
                 {
@@ -185,10 +196,20 @@
 
         .controller("editController", ['$rootScope', function ($rootScope) {
 
+            var self = this;
+
+            self.shouldShowEditMode = function(){
+                return $rootScope.state == "EDIT";
+            };
+
+            self.changeMode = function() {
+                $rootScope.state = "NORMAL";
+            };
+
             var qcm = [];
             $rootScope.qcm = qcm;
 
-            var self = this;
+
             self.showInputQCM = false;
 
             self.addQCM = function() {
