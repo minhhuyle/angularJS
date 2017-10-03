@@ -163,12 +163,11 @@
             self.showColorResponse = function (reponse) {
                 var myResponse = self.questionsAnswer[self.currentQuestion];
                 var goodResponse = self.selectData.questions[self.currentQuestion].good;
-                if(reponse == myResponse){
-                    return "btn-danger";
-                }
-
+                
                 if(reponse == goodResponse){
                     return "btn-success";
+                }else if(reponse == myResponse){
+                    return "btn-danger";
                 }
             }
 
