@@ -77,7 +77,7 @@
 
             self.selectData = null;
 
-            self.selectNote = function (data) {
+            self.selectQuiz = function (data) {
                 if(self.selectData != data){
                     self.currentQuestion = 0;
                     self.score = 0;

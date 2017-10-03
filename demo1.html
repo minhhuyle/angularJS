@@ -8,9 +8,9 @@
     <div ng-controller="quizCtrl as quiz">
         <div>
             <ul>
-               <li ng-repeat="note in quiz.data" style="margin-bottom: 20px">
-                   <button class="btn" ng-class="quiz.showFinishedQuestion(note)"
-                           ng-click="quiz.selectNote(note)">{{note.title}}</button>
+               <li ng-repeat="quizChosen in quiz.data" style="margin-bottom: 20px">
+                   <button class="btn" ng-class="quiz.showFinishedQuestion(quizChosen)"
+                           ng-click="quiz.selectQuiz(quizChosen)">{{quizChosen.title}}</button>
                </li>
             </ul>
         </div>
