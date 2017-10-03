@@ -16,7 +16,13 @@
 
         <div ng-show="quiz.shouldShowSelectedData()">
             <h3>{{quiz.selectData.title}} Selectionné</h3>
+            <h2>Test</h2>
+            <p>{{quiz.showQuestion()}}</p>
+            <ul>
+                <button ng-click="quiz.changeCurrentQuestion(reponse)" ng-repeat="reponse in quiz.getReponses()">{{reponse}}</button>
+            </ul>
         </div>
+
 
     </div>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
