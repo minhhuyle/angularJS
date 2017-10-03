@@ -16,9 +16,12 @@
 
 			self.selectData = null;
 
-
 			self.selectNote = function(data){
 				self.selectData = data;
 			}
+
+            self.shouldShowSelectedData = function(){
+                return self.selectData != null;
+            }
 		}])
 }());

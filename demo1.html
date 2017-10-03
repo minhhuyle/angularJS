@@ -1,5 +1,6 @@
 <html ng-app="myapp">
 <head>
+    <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 </head>
@@ -13,7 +14,7 @@
             </ul>
         </div>
 
-        <div ng-hide="quiz.selectData == null">
+        <div ng-show="quiz.shouldShowSelectedData()">
             <h3>{{quiz.selectData.title}} Selectionné</h3>
         </div>
 
