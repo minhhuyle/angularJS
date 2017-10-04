@@ -8,6 +8,16 @@
             .factory('qcmListService', ['$http', function ($http) {
                 var self = this;
                 self.qcm = [];
+                self.state = "NORMAL";
+
+                self.changeMode = function () {
+                    self.state = (self.state == "EDIT") ? "NORMAL" : "EDIT";
+                    return self.state;
+                };
+
+                self.returnState = function() {
+                    return self.state;
+                };
 
                 self.addNewQcm = function (newQcm) {
                     self.qcm.push(newQcm);
@@ -87,19 +97,19 @@
             )
             .controller("quizCtrl", ['qcmListService', '$rootScope', function (qcmListService, $rootScope) {
                 var self = this;
-                $rootScope.state = "NORMAL";
+             //   $rootScope.state = "NORMAL";
 
 
                 self.changeMode = function () {
-                    $rootScope.state = "EDIT";
+                    qcmListService.changeMode();
                 };
 
                 self.getAllQcms = function () {
                     return qcmListService.getAllQcms();
-                }
+                };
 
                 self.shouldShowNormalMode = function () {
-                    return $rootScope.state == "NORMAL";
+                    return qcmListService.returnState() == "NORMAL";
                 };
 
 
@@ -208,11 +218,11 @@
                 self.numberOfQuestion = 0;
 
                 self.shouldShowEditMode = function () {
-                    return $rootScope.state == "EDIT";
+                    return qcmListService.returnState() == "EDIT";
                 };
 
                 self.changeMode = function () {
-                    $rootScope.state = "NORMAL";
+                    qcmListService.changeMode()
                 };
 
                 self.showInputQCM = false;
