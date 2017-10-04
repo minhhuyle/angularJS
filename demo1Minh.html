@@ -13,13 +13,9 @@
 
     <ul>
         <li ng-repeat="qcm in quiz.getAllQcms()" style="margin-bottom: 20px">
-            <button class="btn" ng-click="quiz.selectQcm(qcm)" ng-class="quiz.getClassFinishedQuiz(quiz)">
+            <button class="btn" ng-click="quiz.selectQcm(qcm)" ng-class="quiz.getClassFinishedQuiz(qcm)">
                 {{qcm.title}}
             </button>
-
-            <!--<button class="btn"
-                    ng-click="quiz.selectQuiz(quizChosen)">{{quizChosen.title}}
-            </button>-->
         </li>
     </ul>
 
@@ -40,6 +36,15 @@
         Score : {{quiz.showScore()}}
     </div>
 
+    <div ng-if="quiz.shouldShowReplay()">
+        <h3>{{quiz.getSelectedQcmTitle()}}</h3>
+        <h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>
+        <ul>
+            <button ng-class="quiz.showColorResponse(reponse)" ng-repeat="reponse in quiz.getReponses()"
+                    ng-click="quiz.replayNextQuestion()">{{reponse}}
+            </button>
+        </ul>
+    </div>
 
 
 
@@ -47,9 +52,6 @@
 </div>
 <!--
 <div ng-show="quiz.shouldShowNormalMode()" ng-controller="quizCtrl as quiz">
-
-
-    <div ng-show="quiz.shouldShowScore()" ng-class="quiz.showLevel()">Score : {{quiz.showScore()}}</div>
 
 
     <div ng-if="quiz.shouldShowReplay()">

@@ -36,6 +36,11 @@
                     if (!self.answers[qcm.title]) {
                         self.answers[qcm.title] = {indexQuestion: 0, datas: []};
                     }
+
+                    if(qcm.done){
+                        qcm.replay = true;
+                        self.answers[qcm.title].indexQuestion = 0;
+                    }
                 };
 
 
@@ -63,7 +68,8 @@
                         currentAnswer.indexQuestion++;
 
                         if(currentAnswer.indexQuestion >= self.selectedQcm.questions.length){
-                            currentAnswer.done = true;
+                            self.selectedQcm.done = true;
+
                             for(var i = 0; i< currentAnswer.datas.length; i++){
                                 if(currentAnswer.datas[i] == self.selectedQcm.questions[i].good){
                                     self.selectedQcm.score++;
@@ -81,7 +87,7 @@
 
 
                 self.isDone = function(){
-                    return getCurrentAnswer().done;
+                    return self.selectedQcm .done;
                 };
 
                 self.shouldShowScore = function () {
@@ -95,7 +101,6 @@
                 };
 
                 self.getClassFinishedQuiz = function (question) {
-                    console.log(question)
                     if (question.done) {
                         return "btn-success";
                     }
@@ -103,84 +108,24 @@
                 };
 
 
-
-
-
-
-
-
-
-
-
-                self.selectQuiz = function (data) {
-                    if (self.selectData != data) {
-                        self.currentQcm = 0;
-                        self.score = 0;
-                        self.questionsAnswer = [];
-                        self.replay = false;
-                    } else if (self.replay) {
-                        self.currentQcm = 0;
-                    }
-                    self.selectData = data;
-                };
-
                 self.shouldShowReplay = function () {
-                    return self.replay && self.currentQcm < self.selectData.questions.length;
+                    return self.selectedQcm.replay;
                 };
-
-                self.shouldShowSelectedData = function () {
-                    if (self.selectData != null) {
-                        if (self.currentQcm >= self.selectData.questions.length) {
-                            return null;
-                        }
-
-                        return true && !self.shouldShowReplay();
-                    }
-
-                    return null
-                };
-
-                self.showQuestion = function () {
-                    return (self.selectData) && self.selectData.questions[self.currentQcm].enonce;
-                };
-
-
-                self.answerQuestion = function (reponse) {
-                    if (reponse == self.selectData.questions[self.currentQcm].good) {
-                        self.score++;
-                    }
-
-                    self.questionsAnswer.push(reponse);
-                    self.currentQcm++;
-
-                    if (self.currentQcm >= self.selectData.questions.length) {
-                        self.replay = true;
-                    }
-                };
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                 self.showLevel = function () {
                     if (self.score == 0) return "text-danger";
-                    else if ((self.selectData) && self.score == self.selectData.questions.length) return "text-success";
+                    else if ((self.selectedQcm) && self.score == self.selectedQcm.questions.length) return "text-success";
                     return "text-info";
-                }
-
+                };
 
                 self.replayNextQuestion = function () {
-                    self.currentQcm++;
+                    self.selectedQcm.indexQuestion++;
                 };
+
+
+
+
 
 
                 self.showColorResponse = function (reponse) {
@@ -236,6 +181,7 @@
                     var newQcm = {
                         title: self.qcmTitle,
                         done: false,
+                        replay: false,
                         score: 0,
                         questions: [{
                             enonce: "ABHHBHBB",
