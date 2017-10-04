@@ -197,6 +197,7 @@
         .controller("editController", ['$rootScope', function ($rootScope) {
 
             var self = this;
+            self.numberOfQuestion =0;
 
             self.shouldShowEditMode = function(){
                 return $rootScope.state == "EDIT";
@@ -232,6 +233,11 @@
 
             self.getQcm = function() {
                 return qcm;
+            }
+
+            self.addQuestion = function() {
+                alert("hello");
+                self.numberOfQuestion++;
             }
 
         }]);

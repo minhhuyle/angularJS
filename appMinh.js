@@ -202,6 +202,8 @@
 
                 var self = this;
 
+                self.numberOfQuestion = 0;
+
                 self.shouldShowEditMode = function () {
                     return $rootScope.state == "EDIT";
                 };
@@ -264,6 +266,12 @@
 
                 self.getAllQcms = function () {
                     return qcm;
+                };
+
+                self.deleteQcm = function(qcmToDelete) {
+                    var index = qcm.indexOf(qcmToDelete);
+                    alert(index);
+                    qcm.splice(index, 1);
                 }
 
             }
