@@ -40,7 +40,7 @@
         <h3>{{quiz.getSelectedQcmTitle()}}</h3>
         <h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>
         <ul>
-            <button ng-class="quiz.showColorResponse(reponse)" ng-repeat="reponse in quiz.getReponses()"
+            <button ng-class="quiz.showColorResponse(reponse)" ng-repeat="reponse in quiz.getSelectedQcmResponses()"
                     ng-click="quiz.replayNextQuestion()">{{reponse}}
             </button>
         </ul>

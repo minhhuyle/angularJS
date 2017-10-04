@@ -34,12 +34,12 @@
                 self.selectQcm = function (qcm) {
                     self.selectedQcm = qcm;
                     if (!self.answers[qcm.title]) {
-                        self.answers[qcm.title] = {indexQuestion: 0, datas: []};
+                        self.answers[qcm.title] = {datas: []};
                     }
 
                     if(qcm.done){
                         qcm.replay = true;
-                        self.answers[qcm.title].indexQuestion = 0;
+                        self.selectedQcm.indexQuestion = 0;
                     }
                 };
 
@@ -52,8 +52,8 @@
 
                 self.getSelectedQcmResponses = function () {
                     if (self.selectedQcm) {
-                        var indexCurrentQuestionOfSelectedQuiz = getCurrentAnswer().indexQuestion;
-                        var questionSelected = self.selectedQcm.questions[indexCurrentQuestionOfSelectedQuiz];
+                        console.log(self.selectedQcm)
+                        var questionSelected = self.selectedQcm.questions[self.selectedQcm.indexQuestion];
                         return questionSelected.responses;
                     }
                     return null;
@@ -65,9 +65,9 @@
                     var currentAnswer = getCurrentAnswer();
                     if(currentAnswer){
                         currentAnswer.datas.push(response);
-                        currentAnswer.indexQuestion++;
+                        self.selectedQcm.indexQuestion++;
 
-                        if(currentAnswer.indexQuestion >= self.selectedQcm.questions.length){
+                        if(self.selectedQcm.indexQuestion >= self.selectedQcm.questions.length){
                             self.selectedQcm.done = true;
 
                             for(var i = 0; i< currentAnswer.datas.length; i++){
@@ -109,7 +109,8 @@
 
 
                 self.shouldShowReplay = function () {
-                    return self.selectedQcm.replay;
+                    return self.selectedQcm && self.selectedQcm.replay
+                        && (self.selectedQcm.indexQuestion < self.selectedQcm.questions.length);
                 };
 
 
@@ -120,17 +121,14 @@
                 };
 
                 self.replayNextQuestion = function () {
-                    self.selectedQcm.indexQuestion++;
+                    (self.selectedQcm) && self.selectedQcm.indexQuestion++;
                 };
 
 
 
-
-
-
                 self.showColorResponse = function (reponse) {
-                    var myResponse = self.questionsAnswer[self.currentQcm];
-                    var goodResponse = self.selectData.questions[self.currentQcm].good;
+                    var myResponse = self.answers[self.selectedQcm.title].datas[self.selectedQcm.indexQuestion];
+                    var goodResponse = self.selectedQcm.questions[self.selectedQcm.indexQuestion].good;
 
                     if (reponse == goodResponse) {
                         return "btn-success";
@@ -138,7 +136,6 @@
                         return "btn-danger";
                     }
                 }
-
 
             }])
 
@@ -182,6 +179,7 @@
                         title: self.qcmTitle,
                         done: false,
                         replay: false,
+                        indexQuestion: 0,
                         score: 0,
                         questions: [{
                             enonce: "ABHHBHBB",
