@@ -1,32 +1,41 @@
+/**
+ * Created by minhhuyle on 04/10/2017.
+ */
 (function () {
 
-    angular.module("myapp", [])
-        .controller("managerCtrl", [function () {
-            var self = this;
-            self.state = "NORMAL";
 
-            self.changeMode = function() {
-                self.state = (self.state == "NORMAL") ? "EDIT" : "NORMAL";
-            };
-        }])
+        angular.module("qcmMinh", ["ngMockE2E"])
+            .factory('qcmListService', ['$http', function ($http) {
+                var self = this;
+                self.qcm = [];
 
-        .controller("quizCtrl", ['$rootScope', function ($rootScope) {
-            var self = this;
-            $rootScope.state = "NORMAL";
+                self.addNewQcm = function (newQcm) {
+                    self.qcm.push(newQcm);
+                };
 
-            self.changeMode = function() {
-                $rootScope.state = "EDIT";
-            };
+                self.getAllQcms = function () {
+                    return self.qcm;
+                };
 
-            self.shouldShowNormalMode = function(){
-                return $rootScope.state == "NORMAL";
-            };
+                $http.get('/qcm').then(
+                    function (response) {
+                        response.data.forEach(ele=>self.qcm.push(ele));
+                    },
+                    function (error) {
+                        console.log(error);
+                    }
+                )
 
-
-
-            self.data = [
-                {
-                    title: "HMTL5",
+                return this;
+            }])
+            .run(function ($httpBackend) {
+                    var l = [{
+                    title: "1er",
+                    done: false,
+                    replay: false,
+                    answersUser: [],
+                    indexQuestion: 0,
+                    score: 0,
                     questions: [{
                         enonce: "ABHHBHBB",
                         responses: ["A", "B", "C", "D"],
@@ -46,16 +55,20 @@
                             responses: ["A", "B", "C", "D"],
                             good: "A"
                         }]
-                },
-                {
-                    title: "JS",
+                },{
+                    title: "2ème",
+                    done: false,
+                    replay: false,
+                    answersUser: [],
+                    indexQuestion: 0,
+                    score: 0,
                     questions: [{
                         enonce: "ABHHBHBB",
                         responses: ["A", "B", "C", "D"],
                         good: "A"
                     },
                         {
-                            enonce: "ABHHBHBB",
+                            enonce: "ABHklkHBHBB",
                             responses: ["A", "B", "C", "D"],
                             good: "B"
                         }, {
@@ -68,177 +81,207 @@
                             responses: ["A", "B", "C", "D"],
                             good: "A"
                         }]
-                },
-                {
-                    title: "Angular",
-                    questions: [{
-                        enonce: "ABHHBHBB",
-                        responses: ["A", "B", "C", "D"],
-                        good: "A"
-                    },
-                        {
-                            enonce: "ABHHBHBB",
-                            responses: ["A", "B", "C", "D"],
-                            good: "B"
-                        }, {
-                            enonce: "Ckdoskdlskdd",
-                            responses: ["A", "B", "C", "D"],
-                            good: "C"
-                        },
-                        {
-                            enonce: "iijijijij",
-                            responses: ["A", "B", "C", "D"],
-                            good: "A"
-                        }]
+                }]
+                    $httpBackend.whenGET('/qcm').respond(l)
                 }
-            ];
-
-
-            self.selectData = null;
-
-            self.selectQuiz = function (data) {
-                if(self.selectData != data){
-                    self.currentQcm = 0;
-                    self.score = 0;
-                    self.questionsAnswer = [];
-                    self.replay = false;
-                }else if (self.replay){
-                    self.currentQcm = 0;
-                }
-                self.selectData = data;
-            };
-
-            self.shouldShowReplay = function(){
-                return self.replay && self.currentQcm < self.selectData.questions.length;
-            };
-
-            self.shouldShowSelectedData = function () {
-                if (self.selectData != null) {
-                    if (self.currentQcm >= self.selectData.questions.length) {
-                        return null;
-                    }
-
-                    return true && !self.shouldShowReplay();
-                }
-
-                return null
-            };
-
-            self.showQuestion = function () {
-                return (self.selectData) && self.selectData.questions[self.currentQcm].enonce;
-            };
-
-            self.getReponses = function () {
-                return (self.selectData) && self.selectData.questions[self.currentQcm].responses;
-            };
-
-            self.getIndexOfQuestion = function () {
-                return self.currentQcm + 1;
-            };
-
-            self.answerQuestion = function (reponse) {
-                if (reponse == self.selectData.questions[self.currentQcm].good) {
-                    self.score++;
-                }
-
-                self.questionsAnswer.push(reponse);
-                self.currentQcm++;
-
-                if(self.currentQcm >= self.selectData.questions.length){
-                    self.replay = true;
-                }
-            };
-
-
-            self.shouldShowScore = function () {
-                if (self.currentQcm == undefined) return false;
-                return (self.selectData) && self.currentQcm >= self.selectData.questions.length;
-            };
-
-            self.showFinishedQuestion = function (question) {
-                if ((self.selectData) && question.title == self.selectData.title) {
-                    return (self.shouldShowScore()) && "btn-success";
-                }
-                return false;
-            };
-
-
-            self.showScore = function () {
-                return self.score;
-            }
-
-            self.showLevel = function () {
-                if (self.score == 0) return "text-danger";
-                else if ((self.selectData) && self.score == self.selectData.questions.length) return "text-success";
-                return "text-info";
-            }
-
-
-            self.replayNextQuestion = function(){
-              self.currentQcm++;
-            };
-
-
-            self.showColorResponse = function (reponse) {
-                var myResponse = self.questionsAnswer[self.currentQcm];
-                var goodResponse = self.selectData.questions[self.currentQcm].good;
-                
-                if(reponse == goodResponse){
-                    return "btn-success";
-                }else if(reponse == myResponse){
-                    return "btn-danger";
-                }
-            }
-
-
-        }])
-
-
-        .controller("editController", ['$rootScope', function ($rootScope) {
-
-            var self = this;
-            self.numberOfQuestion =0;
-
-            self.shouldShowEditMode = function(){
-                return $rootScope.state == "EDIT";
-            };
-
-            self.changeMode = function() {
+            )
+            .controller("quizCtrl", ['qcmListService', '$rootScope', function (qcmListService, $rootScope) {
+                var self = this;
                 $rootScope.state = "NORMAL";
-            };
-
-            var qcm = [];
-            $rootScope.qcm = qcm;
 
 
-            self.showInputQCM = false;
+                self.changeMode = function () {
+                    $rootScope.state = "EDIT";
+                };
 
-            self.addQCM = function() {
-                self.showInputQCM = true;
-            };
+                self.getAllQcms = function () {
+                    return qcmListService.getAllQcms();
+                }
 
-            self.shouldShowInputQCM = function() {
-                return self.showInputQCM;
-            };
+                self.shouldShowNormalMode = function () {
+                    return $rootScope.state == "NORMAL";
+                };
 
-            self.showEditMode = function() {
-                return $rootScope.state == "EDIT";
-            };
 
-            self.submitQcm = function() {
+                self.selectQcm = function (qcm) {
+                    self.selectedQcm = qcm;
+
+                    if (qcm.done) {
+                        qcm.replay = true;
+                        self.selectedQcm.indexQuestion = 0;
+                    }
+                };
+
+
+                self.getSelectedQcmTitle = function () {
+                    return (self.selectedQcm) && self.selectedQcm.title;
+                };
+
+
+                self.getSelectedQcmResponses = function () {
+                    if (self.selectedQcm) {
+                        var questionSelected = self.selectedQcm.questions[self.selectedQcm.indexQuestion];
+                        return questionSelected.responses;
+                    }
+                    return null;
+                };
+
+
+                self.answerToQuestion = function (response) {
+
+                    self.selectedQcm.answersUser.push(response);
+                    self.selectedQcm.indexQuestion++;
+
+                    if (self.selectedQcm.indexQuestion >= self.selectedQcm.questions.length) {
+                        self.selectedQcm.done = true;
+
+                        for (var i = 0; i < self.selectedQcm.answersUser.length; i++) {
+                            if (self.selectedQcm.answersUser[i] == self.selectedQcm.questions[i].good) {
+                                self.selectedQcm.score++;
+                            }
+                        }
+                    }
+                };
+
+
+                self.getIndexOfQuestion = function () {
+                    return (self.selectedQcm) && self.selectedQcm.indexQuestion + 1;
+                };
+
+
+                self.isDone = function () {
+                    return self.selectedQcm.done;
+                };
+
+                self.shouldShowScore = function () {
+                    if (self.currentQcm == undefined) return false;
+                    return (self.selectedQcm) && self.isDone();
+                };
+
+
+                self.showScore = function () {
+                    return (self.selectedQcm) && self.selectedQcm.score;
+                };
+
+                self.getClassFinishedQuiz = function (question) {
+                    if (question.done) {
+                        return "btn-success";
+                    }
+                    return "";
+                };
+
+
+                self.shouldShowReplay = function () {
+                    return self.selectedQcm && self.selectedQcm.replay
+                        && (self.selectedQcm.indexQuestion < self.selectedQcm.questions.length);
+                };
+
+
+                self.showLevel = function () {
+                    if (self.score == 0) return "text-danger";
+                    else if ((self.selectedQcm) && self.score == self.selectedQcm.questions.length) return "text-success";
+                    return "text-info";
+                };
+
+                self.replayNextQuestion = function () {
+                    (self.selectedQcm) && self.selectedQcm.indexQuestion++;
+                };
+
+
+                self.showColorResponse = function (reponse) {
+                    var myResponse = self.selectedQcm.answersUser[self.selectedQcm.indexQuestion];
+                    var goodResponse = self.selectedQcm.questions[self.selectedQcm.indexQuestion].good;
+
+                    if (reponse == goodResponse) {
+                        return "btn-success";
+                    } else if (reponse == myResponse) {
+                        return "btn-danger";
+                    }
+                }
+
+            }])
+
+            .controller("editCtrl", ['qcmListService', '$rootScope', function (qcmListService, $rootScope) {
+
+                var self = this;
+
+                self.numberOfQuestion = 0;
+
+                self.shouldShowEditMode = function () {
+                    return $rootScope.state == "EDIT";
+                };
+
+                self.changeMode = function () {
+                    $rootScope.state = "NORMAL";
+                };
+
                 self.showInputQCM = false;
-                qcm.push(self.qcmTitle);
-                self.qcmTitle = "";
-            };
 
-            self.getQcm = function() {
-                return qcm;
+                self.addQCM = function () {
+                    self.showInputQCM = true;
+                };
+
+                self.shouldShowInputQCM = function () {
+                    return self.showInputQCM;
+                };
+
+                self.showEditMode = function () {
+                    return $rootScope.state == "EDIT";
+                };
+
+                self.submitQcm = function () {
+                    self.showInputQCM = false;
+
+                    var newQcm = {
+                        title: self.qcmTitle,
+                        done: false,
+                        replay: false,
+                        answersUser: [],
+                        indexQuestion: 0,
+                        score: 0,
+                        questions: [{
+                            enonce: "ABHHBHBB",
+                            responses: ["A", "B", "C", "D"],
+                            good: "A"
+                        },
+                            {
+                                enonce: "ABHklkHBHBB",
+                                responses: ["A", "B", "C", "D"],
+                                good: "B"
+                            }, {
+                                enonce: "Ckdoskdlskdd",
+                                responses: ["A", "B", "C", "D"],
+                                good: "C"
+                            },
+                            {
+                                enonce: "iijijijij",
+                                responses: ["A", "B", "C", "D"],
+                                good: "A"
+                            }]
+                    };
+                    qcmListService.addNewQcm(newQcm);
+
+
+                    self.qcmTitle = "";
+                };
+
+                self.getAllQcms = function () {
+                    return qcmListService.getAllQcms();
+                };
+
+                self.deleteQcm = function (qcmToDelete) {
+                    var index = qcmListService.getAllQcms().indexOf(qcmToDelete);
+                    qcmListService.getAllQcms().splice(index, 1);
+                }
+
+                self.selectQcm = function (qcm) {
+                    self.selectedQcm = qcm;
+                }
+
             }
-
-            self.addQuestion = function() {
-                alert("hello");
-                self.numberOfQuestion++;
-            }
-
-        }]);
-}());
+            ])
+        ;
+    }
+    ()
+)
+;
