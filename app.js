@@ -29,21 +29,21 @@
                     title: "HMTL5",
                     questions: [{
                         enonce: "ABHHBHBB",
-                        reponses: ["A", "B", "C", "D"],
+                        responses: ["A", "B", "C", "D"],
                         good: "A"
                     },
                         {
                             enonce: "ABHklkHBHBB",
-                            reponses: ["A", "B", "C", "D"],
+                            responses: ["A", "B", "C", "D"],
                             good: "B"
                         }, {
                             enonce: "Ckdoskdlskdd",
-                            reponses: ["A", "B", "C", "D"],
+                            responses: ["A", "B", "C", "D"],
                             good: "C"
                         },
                         {
                             enonce: "iijijijij",
-                            reponses: ["A", "B", "C", "D"],
+                            responses: ["A", "B", "C", "D"],
                             good: "A"
                         }]
                 },
@@ -51,21 +51,21 @@
                     title: "JS",
                     questions: [{
                         enonce: "ABHHBHBB",
-                        reponses: ["A", "B", "C", "D"],
+                        responses: ["A", "B", "C", "D"],
                         good: "A"
                     },
                         {
                             enonce: "ABHHBHBB",
-                            reponses: ["A", "B", "C", "D"],
+                            responses: ["A", "B", "C", "D"],
                             good: "B"
                         }, {
                             enonce: "Ckdoskdlskdd",
-                            reponses: ["A", "B", "C", "D"],
+                            responses: ["A", "B", "C", "D"],
                             good: "C"
                         },
                         {
                             enonce: "iijijijij",
-                            reponses: ["A", "B", "C", "D"],
+                            responses: ["A", "B", "C", "D"],
                             good: "A"
                         }]
                 },
@@ -73,21 +73,21 @@
                     title: "Angular",
                     questions: [{
                         enonce: "ABHHBHBB",
-                        reponses: ["A", "B", "C", "D"],
+                        responses: ["A", "B", "C", "D"],
                         good: "A"
                     },
                         {
                             enonce: "ABHHBHBB",
-                            reponses: ["A", "B", "C", "D"],
+                            responses: ["A", "B", "C", "D"],
                             good: "B"
                         }, {
                             enonce: "Ckdoskdlskdd",
-                            reponses: ["A", "B", "C", "D"],
+                            responses: ["A", "B", "C", "D"],
                             good: "C"
                         },
                         {
                             enonce: "iijijijij",
-                            reponses: ["A", "B", "C", "D"],
+                            responses: ["A", "B", "C", "D"],
                             good: "A"
                         }]
                 }
@@ -98,23 +98,23 @@
 
             self.selectQuiz = function (data) {
                 if(self.selectData != data){
-                    self.currentQuestion = 0;
+                    self.currentQcm = 0;
                     self.score = 0;
                     self.questionsAnswer = [];
                     self.replay = false;
                 }else if (self.replay){
-                    self.currentQuestion = 0;
+                    self.currentQcm = 0;
                 }
                 self.selectData = data;
             };
 
             self.shouldShowReplay = function(){
-                return self.replay && self.currentQuestion < self.selectData.questions.length;
+                return self.replay && self.currentQcm < self.selectData.questions.length;
             };
 
             self.shouldShowSelectedData = function () {
                 if (self.selectData != null) {
-                    if (self.currentQuestion >= self.selectData.questions.length) {
+                    if (self.currentQcm >= self.selectData.questions.length) {
                         return null;
                     }
 
@@ -125,34 +125,34 @@
             };
 
             self.showQuestion = function () {
-                return (self.selectData) && self.selectData.questions[self.currentQuestion].enonce;
+                return (self.selectData) && self.selectData.questions[self.currentQcm].enonce;
             };
 
             self.getReponses = function () {
-                return (self.selectData) && self.selectData.questions[self.currentQuestion].reponses;
+                return (self.selectData) && self.selectData.questions[self.currentQcm].responses;
             };
 
             self.getIndexOfQuestion = function () {
-                return self.currentQuestion + 1;
+                return self.currentQcm + 1;
             };
 
             self.answerQuestion = function (reponse) {
-                if (reponse == self.selectData.questions[self.currentQuestion].good) {
+                if (reponse == self.selectData.questions[self.currentQcm].good) {
                     self.score++;
                 }
 
                 self.questionsAnswer.push(reponse);
-                self.currentQuestion++;
+                self.currentQcm++;
 
-                if(self.currentQuestion >= self.selectData.questions.length){
+                if(self.currentQcm >= self.selectData.questions.length){
                     self.replay = true;
                 }
             };
 
 
             self.shouldShowScore = function () {
-                if (self.currentQuestion == undefined) return false;
-                return (self.selectData) && self.currentQuestion >= self.selectData.questions.length;
+                if (self.currentQcm == undefined) return false;
+                return (self.selectData) && self.currentQcm >= self.selectData.questions.length;
             };
 
             self.showFinishedQuestion = function (question) {
@@ -175,13 +175,13 @@
 
 
             self.replayNextQuestion = function(){
-              self.currentQuestion++;
+              self.currentQcm++;
             };
 
 
             self.showColorResponse = function (reponse) {
-                var myResponse = self.questionsAnswer[self.currentQuestion];
-                var goodResponse = self.selectData.questions[self.currentQuestion].good;
+                var myResponse = self.questionsAnswer[self.currentQcm];
+                var goodResponse = self.selectData.questions[self.currentQcm].good;
                 
                 if(reponse == goodResponse){
                     return "btn-success";
