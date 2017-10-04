@@ -13,7 +13,7 @@
 
     <ul>
         <li ng-repeat="qcm in quiz.getAllQcms()" style="margin-bottom: 20px">
-            <button class="btn" ng-click="quiz.selectQcm(qcm)" ng-class="quiz.getClassFinishedQuiz(quiz)">
+            <button class="btn" ng-click="quiz.selectQcm(qcm)" ng-class="quiz.getClassFinishedQuiz(qcm)">
                 {{qcm.title}}
             </button>
 

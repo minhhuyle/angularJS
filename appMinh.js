@@ -63,7 +63,8 @@
                         currentAnswer.indexQuestion++;
 
                         if(currentAnswer.indexQuestion >= self.selectedQcm.questions.length){
-                            currentAnswer.done = true;
+                            self.selectedQcm.done = true;
+
                             for(var i = 0; i< currentAnswer.datas.length; i++){
                                 if(currentAnswer.datas[i] == self.selectedQcm.questions[i].good){
                                     self.selectedQcm.score++;
@@ -81,7 +82,7 @@
 
 
                 self.isDone = function(){
-                    return getCurrentAnswer().done;
+                    return self.selectedQcm.done;
                 };
 
                 self.shouldShowScore = function () {
