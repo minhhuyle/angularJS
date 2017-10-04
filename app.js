@@ -5,9 +5,9 @@
 
 
         angular.module("qcmMinh", ["ngMockE2E"])
-            .factory('qcmListService', ['$http', function ($http) {
+            .factory('stateManagementQcm', [function(){
                 var self = this;
-                self.qcm = [];
+
                 self.state = "NORMAL";
 
                 self.changeMode = function () {
@@ -18,6 +18,12 @@
                 self.returnState = function() {
                     return self.state;
                 };
+
+                return this;
+            }])
+            .factory('qcmListService', ['$http', function ($http) {
+                var self = this;
+                self.qcm = [];
 
                 self.addNewQcm = function (newQcm) {
                     self.qcm.push(newQcm);
@@ -95,13 +101,13 @@
                     $httpBackend.whenGET('/qcm').respond(l)
                 }
             )
-            .controller("quizCtrl", ['qcmListService', '$rootScope', function (qcmListService, $rootScope) {
+            .controller("quizCtrl", ['qcmListService', 'stateManagementQcm', '$rootScope', function (qcmListService, stateManagementQcm, $rootScope) {
                 var self = this;
              //   $rootScope.state = "NORMAL";
 
 
                 self.changeMode = function () {
-                    qcmListService.changeMode();
+                    stateManagementQcm.changeMode();
                 };
 
                 self.getAllQcms = function () {
@@ -109,7 +115,7 @@
                 };
 
                 self.shouldShowNormalMode = function () {
-                    return qcmListService.returnState() == "NORMAL";
+                    return stateManagementQcm.returnState() == "NORMAL";
                 };
 
 
@@ -211,18 +217,18 @@
 
             }])
 
-            .controller("editCtrl", ['qcmListService', '$rootScope', function (qcmListService, $rootScope) {
+            .controller("editCtrl", ['qcmListService', 'stateManagementQcm', '$rootScope', function (qcmListService, stateManagementQcm, $rootScope) {
 
                 var self = this;
 
                 self.numberOfQuestion = 0;
 
                 self.shouldShowEditMode = function () {
-                    return qcmListService.returnState() == "EDIT";
+                    return stateManagementQcm.returnState() == "EDIT";
                 };
 
                 self.changeMode = function () {
-                    qcmListService.changeMode()
+                    stateManagementQcm.changeMode()
                 };
 
                 self.showInputQCM = false;
@@ -233,10 +239,6 @@
 
                 self.shouldShowInputQCM = function () {
                     return self.showInputQCM;
-                };
-
-                self.showEditMode = function () {
-                    return $rootScope.state == "EDIT";
                 };
 
                 self.submitQcm = function () {
