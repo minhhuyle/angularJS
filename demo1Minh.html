@@ -7,12 +7,16 @@
     <title>Title</title>
 </head>
 <body>
+<h1 class="text-info" align="center">QCM</h1>
 <div class="container" ng-app="qcmMinh">
     <div ng-show="quiz.shouldShowNormalMode()" ng-controller="quizCtrl as quiz">
-        <button ng-click="quiz.changeMode()" class="btn btn-warning">Mode normal</button>
-        <ul>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button ng-click="quiz.changeMode()" class="btn btn-warning">Mode normal</button>
+        </nav>
+
+        <ul class="list-group">
             <br/>
-            <li ng-repeat="qcm in quiz.getAllQcms()" style="margin-bottom: 20px">
+            <li ng-repeat="qcm in quiz.getAllQcms()" class="list-group-item">
                 <button class="btn" ng-click="quiz.selectQcm(qcm)" ng-class="quiz.getClassFinishedQuiz(qcm)">
                     {{qcm.title}}
                 </button>
@@ -52,10 +56,12 @@
     </div>
 
     <div ng-show="edit.shouldShowEditMode()" ng-controller="editCtrl as edit">
-        <button ng-click="edit.changeMode()" class="btn btn-info">Mode Edition</button>
-        <ul>
-            <br/>
-            <li ng-repeat="qcm in edit.getAllQcms()">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button ng-click="edit.changeMode()" class="btn btn-info">Mode Edition</button>
+        </nav>
+
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="qcm in edit.getAllQcms()">
                 <button class="btn" ng-click="edit.selectQcm(qcm)">
                     {{qcm.title}}
                 </button>
@@ -77,7 +83,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-mocks.js"></script>
-<script src="appMinh.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
