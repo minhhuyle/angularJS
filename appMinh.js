@@ -107,6 +107,11 @@
 
 
 
+
+
+
+
+
                 self.selectQuiz = function (data) {
                     if (self.selectData != data) {
                         self.currentQcm = 0;
