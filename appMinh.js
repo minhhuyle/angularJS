@@ -203,9 +203,8 @@
                 };
 
                 self.deleteQcm = function (qcmToDelete) {
-                    var index = qcm.indexOf(qcmToDelete);
-                    alert(index);
-                    qcm.splice(index, 1);
+                    var index = qcmListService.getAllQcms().indexOf(qcmToDelete);
+                    qcmListService.getAllQcms().splice(index, 1);
                 }
 
                 self.selectQcm = function (qcm) {
