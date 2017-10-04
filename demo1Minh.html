@@ -10,8 +10,8 @@
 <div class="container" ng-app="qcmMinh">
     <div ng-show="quiz.shouldShowNormalMode()" ng-controller="quizCtrl as quiz">
         <button ng-click="quiz.changeMode()" class="btn btn-warning">Mode normal</button>
-
         <ul>
+            <br/>
             <li ng-repeat="qcm in quiz.getAllQcms()" style="margin-bottom: 20px">
                 <button class="btn" ng-click="quiz.selectQcm(qcm)" ng-class="quiz.getClassFinishedQuiz(qcm)">
                     {{qcm.title}}
@@ -54,6 +54,7 @@
     <div ng-show="edit.shouldShowEditMode()" ng-controller="editCtrl as edit">
         <button ng-click="edit.changeMode()" class="btn btn-info">Mode Edition</button>
         <ul>
+            <br/>
             <li ng-repeat="qcm in edit.getAllQcms()">
                 <button class="btn" ng-click="edit.selectQcm(qcm)">
                     {{qcm.title}}
