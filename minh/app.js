@@ -64,19 +64,34 @@
 
                         if(currentAnswer.indexQuestion >= self.selectedQcm.questions.length){
                             currentAnswer.done = true;
+                            for(var i = 0; i< currentAnswer.datas.length; i++){
+                                if(currentAnswer.datas[i] == self.selectedQcm.questions[i].good){
+                                    self.selectedQcm.score++;
+                                }
+                            }
                         }
                     };
                 };
 
 
                 self.getIndexOfQuestion = function () {
-                    return getCurrentAnswer().indexQuestion + 1;
+                    return (self.selectedQcm) &&  getCurrentAnswer().datas.length + 1;
                 };
 
 
 
                 self.isDone = function(){
                     return getCurrentAnswer().done;
+                };
+
+                self.shouldShowScore = function () {
+                    if (self.currentQcm == undefined) return false;
+                    return (self.selectedQcm) && self.isDone();
+                };
+
+
+                self.showScore = function () {
+                    return (self.selectedQcm) && self.selectedQcm.score;
                 };
 
 
@@ -137,10 +152,8 @@
 
 
 
-                self.shouldShowScore = function () {
-                    if (self.currentQcm == undefined) return false;
-                    return (self.selectData) && self.currentQcm >= self.selectData.questions.length;
-                };
+
+
 
                 self.showFinishedQuestion = function (question) {
                     if ((self.selectData) && question.title == self.selectData.title) {
@@ -150,9 +163,7 @@
                 };
 
 
-                self.showScore = function () {
-                    return self.score;
-                }
+
 
                 self.showLevel = function () {
                     if (self.score == 0) return "text-danger";
@@ -217,6 +228,7 @@
                     var newQcm = {
                         title: self.qcmTitle,
                         done: false,
+                        score: 0,
                         questions: [{
                             enonce: "ABHHBHBB",
                             responses: ["A", "B", "C", "D"],

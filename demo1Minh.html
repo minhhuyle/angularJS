@@ -26,7 +26,7 @@
 
     <div ng-if="quiz.getSelectedQcmTitle() && !quiz.isDone()">
         <h3>{{quiz.getSelectedQcmTitle()}} Selectionné</h3>
-        <!--<h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>-->
+        <h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>
         <p>{{quiz.showQuestion()}}</p>
         <ul>
             <button ng-click="quiz.answerToQuestion(reponse)"
@@ -35,6 +35,13 @@
             </button>
         </ul>
     </div>
+
+    <div ng-show="quiz.getSelectedQcmTitle() && quiz.isDone()" ng-class="quiz.showLevel()">
+        Score : {{quiz.showScore()}}
+    </div>
+
+
+
 
 
 </div>
