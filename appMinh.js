@@ -81,7 +81,7 @@
 
 
                 self.getIndexOfQuestion = function () {
-                    return (self.selectedQcm) &&  getCurrentAnswer().datas.length + 1;
+                    return (self.selectedQcm) && self.selectedQcm.indexQuestion + 1;
                 };
 
 
