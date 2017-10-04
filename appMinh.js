@@ -2,9 +2,11 @@
  * Created by minhhuyle on 04/10/2017.
  */
 (function () {
+        angular.module("mockModule", ['ngMockE2E'])
+            
 
         angular.module("qcmMinh", [])
-            .factory('qcmListService', [function () {
+            .factory('qcmListService', ['$http', function ($http) {
                 var self = this;
                 self.qcm = [];
 
@@ -16,8 +18,103 @@
                     return self.qcm;
                 };
 
+                $http.get('/qcm').then(
+                    function(response) {
+                        self.qcm = response.data;
+                    },
+                    function(error) {
+                        console.log(error);
+                    }
+                )
+
                 return this;
             }])
+            .run(function ($httpBackend) {
+                $httpBackend.whenGET('/qcm').respond(
+                    {
+                        title: "1er",
+                        done: false,
+                        replay: false,
+                        answersUser: [],
+                        indexQuestion: 0,
+                        score: 0,
+                        questions: [{
+                            enonce: "ABHHBHBB",
+                            responses: ["A", "B", "C", "D"],
+                            good: "A"
+                        },
+                            {
+                                enonce: "ABHklkHBHBB",
+                                responses: ["A", "B", "C", "D"],
+                                good: "B"
+                            }, {
+                                enonce: "Ckdoskdlskdd",
+                                responses: ["A", "B", "C", "D"],
+                                good: "C"
+                            },
+                            {
+                                enonce: "iijijijij",
+                                responses: ["A", "B", "C", "D"],
+                                good: "A"
+                            }]
+                    },
+                    {
+                        title: "2eme",
+                        done: false,
+                        replay: false,
+                        answersUser: [],
+                        indexQuestion: 0,
+                        score: 0,
+                        questions: [{
+                            enonce: "ABHHBHBB",
+                            responses: ["A", "B", "C", "D"],
+                            good: "A"
+                        },
+                            {
+                                enonce: "ABHklkHBHBB",
+                                responses: ["A", "B", "C", "D"],
+                                good: "B"
+                            }, {
+                                enonce: "Ckdoskdlskdd",
+                                responses: ["A", "B", "C", "D"],
+                                good: "C"
+                            },
+                            {
+                                enonce: "iijijijij",
+                                responses: ["A", "B", "C", "D"],
+                                good: "A"
+                            }]
+                    },
+                    {
+                        title: "3ème",
+                        done: false,
+                        replay: false,
+                        answersUser: [],
+                        indexQuestion: 0,
+                        score: 0,
+                        questions: [{
+                            enonce: "ABHHBHBB",
+                            responses: ["A", "B", "C", "D"],
+                            good: "A"
+                        },
+                            {
+                                enonce: "ABHklkHBHBB",
+                                responses: ["A", "B", "C", "D"],
+                                good: "B"
+                            }, {
+                                enonce: "Ckdoskdlskdd",
+                                responses: ["A", "B", "C", "D"],
+                                good: "C"
+                            },
+                            {
+                                enonce: "iijijijij",
+                                responses: ["A", "B", "C", "D"],
+                                good: "A"
+                            }]
+                    }
+                )
+                }
+            )
             .controller("quizCtrl", ['qcmListService', '$rootScope', function (qcmListService, $rootScope) {
                 var self = this;
                 $rootScope.state = "NORMAL";
@@ -27,7 +124,7 @@
                     $rootScope.state = "EDIT";
                 };
 
-                self.getAllQcms = function() {
+                self.getAllQcms = function () {
                     return qcmListService.getAllQcms();
                 }
 
