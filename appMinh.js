@@ -4,7 +4,21 @@
 (function () {
 
         angular.module("qcmMinh", [])
-            .controller("quizCtrl", ['$rootScope', function ($rootScope) {
+            .factory('qcmListService', [function () {
+                var self = this;
+                self.qcm = [];
+
+                self.addNewQcm = function (newQcm) {
+                    self.qcm.push(newQcm);
+                };
+
+                self.getAllQcms = function () {
+                    return self.qcm;
+                };
+
+                return this;
+            }])
+            .controller("quizCtrl", ['qcmListService', '$rootScope', function (qcmListService, $rootScope) {
                 var self = this;
                 $rootScope.state = "NORMAL";
 
@@ -13,13 +27,12 @@
                     $rootScope.state = "EDIT";
                 };
 
+                self.getAllQcms = function() {
+                    return qcmListService.getAllQcms();
+                }
+
                 self.shouldShowNormalMode = function () {
                     return $rootScope.state == "NORMAL";
-                };
-
-
-                self.getAllQcms = function () {
-                    return $rootScope.qcm;
                 };
 
 
@@ -121,8 +134,7 @@
 
             }])
 
-
-            .controller("editCtrl", ['$rootScope', function ($rootScope) {
+            .controller("editCtrl", ['qcmListService', '$rootScope', function (qcmListService, $rootScope) {
 
                 var self = this;
 
@@ -135,10 +147,6 @@
                 self.changeMode = function () {
                     $rootScope.state = "NORMAL";
                 };
-
-                var qcm = [];
-                $rootScope.qcm = qcm;
-
 
                 self.showInputQCM = false;
 
@@ -184,15 +192,14 @@
                                 good: "A"
                             }]
                     };
-
-                    qcm.push(newQcm);
+                    qcmListService.addNewQcm(newQcm);
 
 
                     self.qcmTitle = "";
                 };
 
                 self.getAllQcms = function () {
-                    return qcm;
+                    return qcmListService.getAllQcms();
                 };
 
                 self.deleteQcm = function (qcmToDelete) {
@@ -200,7 +207,7 @@
                     alert(index);
                     qcm.splice(index, 1);
                 }
-                
+
                 self.selectQcm = function (qcm) {
                     self.selectedQcm = qcm;
                 }
