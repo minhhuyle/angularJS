@@ -94,7 +94,13 @@
                     return (self.selectedQcm) && self.selectedQcm.score;
                 };
 
-
+                self.getClassFinishedQuiz = function (question) {
+                    console.log(question)
+                    if (question.done) {
+                        return "btn-success";
+                    }
+                    return "";
+                };
 
 
 
@@ -155,12 +161,7 @@
 
 
 
-                self.showFinishedQuestion = function (question) {
-                    if ((self.selectData) && question.title == self.selectData.title) {
-                        return (self.shouldShowScore()) && "btn-success";
-                    }
-                    return false;
-                };
+
 
 
 

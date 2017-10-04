@@ -13,11 +13,11 @@
 
     <ul>
         <li ng-repeat="qcm in quiz.getAllQcms()" style="margin-bottom: 20px">
-            <button class="btn" ng-click="quiz.selectQcm(qcm)">
+            <button class="btn" ng-click="quiz.selectQcm(qcm)" ng-class="quiz.getClassFinishedQuiz(qcm)">
                 {{qcm.title}}
             </button>
 
-            <!--<button class="btn" ng-class="quiz.showFinishedQuestion(quizChosen)"
+            <!--<button class="btn"
                     ng-click="quiz.selectQuiz(quizChosen)">{{quizChosen.title}}
             </button>-->
         </li>
