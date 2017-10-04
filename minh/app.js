@@ -15,15 +15,6 @@
                     return (self.selectedQcm) && self.answers[self.selectedQcm.title];
                 };
 
-                let addNewResponseToCurrentAnswer = function(answer){
-                    var currentAnswer = getCurrentAnswer();
-                    if(currentAnswer){
-                        currentAnswer.datas.push(answer);
-                        currentAnswer.indexQuestion++;
-                    };
-                };
-
-
 
 
                 self.changeMode = function () {
@@ -66,17 +57,29 @@
 
 
                 self.answerToQuestion = function (response) {
-                    addNewResponseToCurrentAnswer(response);
+                    var currentAnswer = getCurrentAnswer();
+                    if(currentAnswer){
+                        currentAnswer.datas.push(response);
+                        currentAnswer.indexQuestion++;
+
+                        if(currentAnswer.indexQuestion >= self.selectedQcm.questions.length){
+                            currentAnswer.done = true;
+                        }
+                    };
                 };
-
-
-
-
 
 
                 self.getIndexOfQuestion = function () {
                     return getCurrentAnswer().indexQuestion + 1;
                 };
+
+
+
+                self.isDone = function(){
+                    return getCurrentAnswer().done;
+                };
+
+
 
 
 
@@ -128,6 +131,10 @@
                         self.replay = true;
                     }
                 };
+
+
+
+
 
 
                 self.shouldShowScore = function () {
@@ -209,6 +216,7 @@
 
                     var newQcm = {
                         title: self.qcmTitle,
+                        done: false,
                         questions: [{
                             enonce: "ABHHBHBB",
                             responses: ["A", "B", "C", "D"],

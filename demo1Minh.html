@@ -24,9 +24,9 @@
     </ul>
 
 
-    <div ng-if="quiz.getSelectedQcmTitle()">
+    <div ng-if="quiz.getSelectedQcmTitle() && !quiz.isDone()">
         <h3>{{quiz.getSelectedQcmTitle()}} Selectionné</h3>
-        <h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>
+        <!--<h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>-->
         <p>{{quiz.showQuestion()}}</p>
         <ul>
             <button ng-click="quiz.answerToQuestion(reponse)"
