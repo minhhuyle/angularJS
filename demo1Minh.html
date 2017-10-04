@@ -6,81 +6,70 @@
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <title>Title</title>
 </head>
-<body ng-app="qcmMinh">
+<body>
+<div class="container" ng-app="qcmMinh">
+    <div ng-show="quiz.shouldShowNormalMode()" ng-controller="quizCtrl as quiz">
+        <button ng-click="quiz.changeMode()" class="btn btn-warning">Mode normal</button>
 
-<div ng-show="quiz.shouldShowNormalMode()" ng-controller="quizCtrl as quiz">
-    <button ng-click="quiz.changeMode()" class="btn">Mode normal</button>
-
-    <ul>
-        <li ng-repeat="qcm in quiz.getAllQcms()" style="margin-bottom: 20px">
-            <button class="btn" ng-click="quiz.selectQcm(qcm)" ng-class="quiz.getClassFinishedQuiz(qcm)">
-                {{qcm.title}}
-            </button>
-        </li>
-    </ul>
-
-
-    <div ng-if="quiz.getSelectedQcmTitle() && !quiz.isDone()">
-        <h3>{{quiz.getSelectedQcmTitle()}} Selectionné</h3>
-        <h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>
-        <p>{{quiz.showQuestion()}}</p>
         <ul>
-            <button ng-click="quiz.answerToQuestion(reponse)"
-                    ng-repeat="reponse in quiz.getSelectedQcmResponses()">
-                {{reponse}}
-            </button>
+            <li ng-repeat="qcm in quiz.getAllQcms()" style="margin-bottom: 20px">
+                <button class="btn" ng-click="quiz.selectQcm(qcm)" ng-class="quiz.getClassFinishedQuiz(qcm)">
+                    {{qcm.title}}
+                </button>
+            </li>
         </ul>
+
+
+        <div ng-if="quiz.getSelectedQcmTitle() && !quiz.isDone()">
+            <h3>{{quiz.getSelectedQcmTitle()}} Selectionné</h3>
+            <h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>
+            <p>{{quiz.showQuestion()}}</p>
+            <ul>
+                <button ng-click="quiz.answerToQuestion(reponse)"
+                        ng-repeat="reponse in quiz.getSelectedQcmResponses()">
+                    {{reponse}}
+                </button>
+            </ul>
+        </div>
+
+        <div ng-show="quiz.getSelectedQcmTitle() && quiz.isDone()" ng-class="quiz.showLevel()">
+            Score : {{quiz.showScore()}}
+        </div>
+
+        <div ng-if="quiz.shouldShowReplay()">
+            <h3>{{quiz.getSelectedQcmTitle()}}</h3>
+            <h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>
+            <ul>
+                <button ng-class="quiz.showColorResponse(reponse)" ng-repeat="reponse in quiz.getSelectedQcmResponses()"
+                        ng-click="quiz.replayNextQuestion()">{{reponse}}
+                </button>
+            </ul>
+        </div>
+
+
+
+
     </div>
 
-    <div ng-show="quiz.getSelectedQcmTitle() && quiz.isDone()" ng-class="quiz.showLevel()">
-        Score : {{quiz.showScore()}}
-    </div>
-
-    <div ng-if="quiz.shouldShowReplay()">
-        <h3>{{quiz.getSelectedQcmTitle()}}</h3>
-        <h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>
+    <div ng-show="edit.shouldShowEditMode()" ng-controller="editCtrl as edit">
+        <button ng-click="edit.changeMode()" class="btn btn-info">Mode Edition</button>
         <ul>
-            <button ng-class="quiz.showColorResponse(reponse)" ng-repeat="reponse in quiz.getSelectedQcmResponses()"
-                    ng-click="quiz.replayNextQuestion()">{{reponse}}
-            </button>
+            <li ng-repeat="qcm in edit.getAllQcms()">
+                <button class="btn" ng-click="edit.selectQcm(qcm)">
+                    {{qcm.title}}
+                </button>
+            </li>
         </ul>
-    </div>
 
+        <button class="btn" ng-click="edit.addQCM()">Créer</button>
 
+        <div ng-show="edit.shouldShowInputQCM()">
+            <form ng-submit="edit.submitQcm()" name="newQcm">
+                <p>QCM : <input ng-model="edit.qcmTitle" required type="text"></p>
+                <button ng-disabled="newQcm.$invalid" type="submit" class="btn">Valider</button>
+            </form>
+        </div>
 
-
-</div>
-<!--
-<div ng-show="quiz.shouldShowNormalMode()" ng-controller="quizCtrl as quiz">
-
-
-    <div ng-if="quiz.shouldShowReplay()">
-        <h3>{{quiz.selectData.title}}</h3>
-        <h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>
-        <ul>
-            <button ng-class="quiz.showColorResponse(reponse)" ng-repeat="reponse in quiz.getReponses()"
-                    ng-click="quiz.replayNextQuestion()">{{reponse}}
-            </button>
-        </ul>
-    </div>
-</div>
--->
-
-<div ng-show="edit.shouldShowEditMode()" ng-controller="editCtrl as edit">
-    <button ng-click="edit.changeMode()" class="btn">Mode Edition</button>
-    <ul>
-        <li ng-repeat="qcm in edit.getAllQcms()">
-            {{qcm.title}}
-        </li>
-    </ul>
-
-    <button class="btn" ng-click="edit.addQCM()">Créer</button>
-
-    <div ng-show="edit.shouldShowInputQCM()">
-        <form ng-submit="edit.submitQcm()" name="newQcm">
-            <p>QCM : <input ng-model="edit.qcmTitle" required type="text"></p>
-            <button ng-disabled="newQcm.$invalid" type="submit" class="btn">Valider</button>
-        </form>
     </div>
 
 </div>

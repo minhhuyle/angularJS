@@ -7,8 +7,7 @@
             .controller("quizCtrl", ['$rootScope', function ($rootScope) {
                 var self = this;
                 $rootScope.state = "NORMAL";
-                self.answersUser = {};
-                
+
 
                 self.changeMode = function () {
                     $rootScope.state = "EDIT";
@@ -200,6 +199,10 @@
                     var index = qcm.indexOf(qcmToDelete);
                     alert(index);
                     qcm.splice(index, 1);
+                }
+                
+                self.selectQcm = function (qcm) {
+                    self.selectedQcm = qcm;
                 }
 
             }
