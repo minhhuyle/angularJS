@@ -7,15 +7,8 @@
             .controller("quizCtrl", ['$rootScope', function ($rootScope) {
                 var self = this;
                 $rootScope.state = "NORMAL";
-                self.answers = {};
-
-
-
-                let getCurrentAnswer = function(){
-                    return (self.selectedQcm) && self.answers[self.selectedQcm.title];
-                };
-
-
+                self.answersUser = {};
+                
 
                 self.changeMode = function () {
                     $rootScope.state = "EDIT";
@@ -33,11 +26,8 @@
 
                 self.selectQcm = function (qcm) {
                     self.selectedQcm = qcm;
-                    if (!self.answers[qcm.title]) {
-                        self.answers[qcm.title] = {datas: []};
-                    }
 
-                    if(qcm.done){
+                    if (qcm.done) {
                         qcm.replay = true;
                         self.selectedQcm.indexQuestion = 0;
                     }
@@ -49,10 +39,8 @@
                 };
 
 
-
                 self.getSelectedQcmResponses = function () {
                     if (self.selectedQcm) {
-                        console.log(self.selectedQcm)
                         var questionSelected = self.selectedQcm.questions[self.selectedQcm.indexQuestion];
                         return questionSelected.responses;
                     }
@@ -60,23 +48,20 @@
                 };
 
 
-
                 self.answerToQuestion = function (response) {
-                    var currentAnswer = getCurrentAnswer();
-                    if(currentAnswer){
-                        currentAnswer.datas.push(response);
-                        self.selectedQcm.indexQuestion++;
 
-                        if(self.selectedQcm.indexQuestion >= self.selectedQcm.questions.length){
-                            self.selectedQcm.done = true;
+                    self.selectedQcm.answersUser.push(response);
+                    self.selectedQcm.indexQuestion++;
 
-                            for(var i = 0; i< currentAnswer.datas.length; i++){
-                                if(currentAnswer.datas[i] == self.selectedQcm.questions[i].good){
-                                    self.selectedQcm.score++;
-                                }
+                    if (self.selectedQcm.indexQuestion >= self.selectedQcm.questions.length) {
+                        self.selectedQcm.done = true;
+
+                        for (var i = 0; i < self.selectedQcm.answersUser.length; i++) {
+                            if (self.selectedQcm.answersUser[i] == self.selectedQcm.questions[i].good) {
+                                self.selectedQcm.score++;
                             }
                         }
-                    };
+                    }
                 };
 
 
@@ -85,9 +70,8 @@
                 };
 
 
-
-                self.isDone = function(){
-                    return self.selectedQcm .done;
+                self.isDone = function () {
+                    return self.selectedQcm.done;
                 };
 
                 self.shouldShowScore = function () {
@@ -125,9 +109,8 @@
                 };
 
 
-
                 self.showColorResponse = function (reponse) {
-                    var myResponse = self.answers[self.selectedQcm.title].datas[self.selectedQcm.indexQuestion];
+                    var myResponse = self.selectedQcm.answersUser[self.selectedQcm.indexQuestion];
                     var goodResponse = self.selectedQcm.questions[self.selectedQcm.indexQuestion].good;
 
                     if (reponse == goodResponse) {
@@ -179,6 +162,7 @@
                         title: self.qcmTitle,
                         done: false,
                         replay: false,
+                        answersUser: [],
                         indexQuestion: 0,
                         score: 0,
                         questions: [{
@@ -186,20 +170,20 @@
                             responses: ["A", "B", "C", "D"],
                             good: "A"
                         },
-                        {
-                            enonce: "ABHklkHBHBB",
-                            responses: ["A", "B", "C", "D"],
-                            good: "B"
-                        }, {
-                            enonce: "Ckdoskdlskdd",
-                            responses: ["A", "B", "C", "D"],
-                            good: "C"
-                        },
-                        {
-                            enonce: "iijijijij",
-                            responses: ["A", "B", "C", "D"],
-                            good: "A"
-                        }]
+                            {
+                                enonce: "ABHklkHBHBB",
+                                responses: ["A", "B", "C", "D"],
+                                good: "B"
+                            }, {
+                                enonce: "Ckdoskdlskdd",
+                                responses: ["A", "B", "C", "D"],
+                                good: "C"
+                            },
+                            {
+                                enonce: "iijijijij",
+                                responses: ["A", "B", "C", "D"],
+                                good: "A"
+                            }]
                     };
 
                     qcm.push(newQcm);
@@ -212,7 +196,7 @@
                     return qcm;
                 };
 
-                self.deleteQcm = function(qcmToDelete) {
+                self.deleteQcm = function (qcmToDelete) {
                     var index = qcm.indexOf(qcmToDelete);
                     alert(index);
                     qcm.splice(index, 1);
