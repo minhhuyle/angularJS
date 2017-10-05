@@ -33,22 +33,6 @@
                     })
                     .otherwise({redirectTo: '/'});
             }])
-        .factory('stateManagementQcm', [function () {
-                var self = this;
-
-                self.state = "NORMAL";
-
-                self.changeMode = function () {
-                    self.state = (self.state == "EDIT") ? "NORMAL" : "EDIT";
-                    return self.state;
-                };
-
-                self.returnState = function () {
-                    return self.state;
-                };
-
-                return this;
-            }])
             .factory('qcmResource', ['$resource', function ($resource) {
                 return $resource('/qcm/:id', {id: '@id'});
             }])
@@ -121,15 +105,15 @@
                                 responses: ["A", "B", "C", "D"],
                                 good: 3
                             }]
-                    }]
+                    }];
                     $httpBackend.whenGET('/qcm').respond(l);
                     $httpBackend.whenGET(new RegExp('\\/qcm\\/[0-9]+')).respond(l[0]);
-                    $httpBackend.whenGET(new RegExp('[A-Z]+')).passThrough();
+                    $httpBackend.whenGET(new RegExp('[A-z]+')).passThrough();
                 }
             )
-            .controller("quizCtrl", ['qcmListService', 'stateManagementQcm', '$rootScope', function (qcmListService, stateManagementQcm, $rootScope) {
+            .controller("quizCtrl", ['qcmListService',
+                function (qcmListService) {
                 var self = this;
-                //   $rootScope.state = "NORMAL";
 
                 self.type = "ALL";
                 self.types = [{
@@ -142,16 +126,9 @@
                         label: "Pas Répondu", type: "UNDONE"
                     }];
 
-                self.changeMode = function () {
-                    stateManagementQcm.changeMode();
-                };
 
                 self.getAllQcms = function () {
                     return qcmListService.getAllQcms();
-                };
-
-                self.shouldShowNormalMode = function () {
-                    return stateManagementQcm.returnState() == "NORMAL";
                 };
 
 
@@ -275,19 +252,11 @@
 
             }])
 
-            .controller("editCtrl", ['qcmListService', 'stateManagementQcm', '$rootScope', function (qcmListService, stateManagementQcm, $rootScope) {
+            .controller("editCtrl", ['qcmListService', '$rootScope', function (qcmListService) {
 
                 var self = this;
 
                 self.numberOfQuestion = 0;
-
-                self.shouldShowEditMode = function () {
-                    return stateManagementQcm.returnState() == "EDIT";
-                };
-
-                self.changeMode = function () {
-                    stateManagementQcm.changeMode()
-                };
 
                 self.showInputQCM = false;
 
