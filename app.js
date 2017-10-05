@@ -203,7 +203,10 @@
                         self.selectedQcm.done = true;
 
                         for (var i = 0; i < self.selectedQcm.answersUser.length; i++) {
-                            if (self.selectedQcm.answersUser[i] == self.selectedQcm.questions[i].good) {
+                            var indexGoodResponse = self.selectedQcm.questions[i].good
+
+                            if (self.selectedQcm.answersUser[i] == self.selectedQcm.questions[i]
+                                    .responses[indexGoodResponse]) {
                                 self.selectedQcm.score++;
                             }
                         }
