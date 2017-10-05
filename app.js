@@ -124,9 +124,7 @@
                     }]
                     $httpBackend.whenGET('/qcm').respond(l);
                     $httpBackend.whenGET(new RegExp('\\/qcm\\/[0-9]+')).respond(l[0]);
-                    $httpBackend.whenGET("edit.html").passThrough();
-                    $httpBackend.whenGET("index.html").passThrough();
-                    $httpBackend.whenGET("quiz.html").passThrough();
+                    $httpBackend.whenGET(new RegExp('[A-Z]+')).passThrough();
                 }
             )
             .controller("quizCtrl", ['qcmListService', 'stateManagementQcm', '$rootScope', function (qcmListService, stateManagementQcm, $rootScope) {
