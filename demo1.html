@@ -22,9 +22,9 @@
                 </button>
             </li>
         </ul>
-        <button class="btn" ng-class="quiz.filterAll()" ng-click="quiz.filterAll()">Tous</button>
-        <button class="btn" ng-click="quiz.filterDone()">Répondus</button>
-        <button class="btn" ng-click="quiz.filterUndone()">Pas répondus</button>
+        <button class="btn" ng-class="quiz.activeBtn('ALL')" ng-click="quiz.filterAll()">Tous</button>
+        <button class="btn" ng-class="quiz.activeBtn('DONE')" ng-click="quiz.filterDone()">Répondus</button>
+        <button class="btn" ng-class="quiz.activeBtn('UNDONE')" ng-click="quiz.filterUndone()">Pas répondus</button>
 
         <div class="alert alert-success" ng-if="quiz.getSelectedQcmTitle() && !quiz.isDone()">
             <h3>{{quiz.getSelectedQcmTitle()}} Selectionné</h3>

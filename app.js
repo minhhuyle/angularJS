@@ -138,6 +138,10 @@
                     self.type = "UNDONE";
                 };
 
+                self.activeBtn = function(type) {
+                   return {'btn-primary': type == self.type}
+                }
+
                 self.selectQcm = function (qcm) {
                     self.selectedQcm = qcm;
 
