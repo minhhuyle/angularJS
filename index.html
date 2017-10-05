@@ -9,7 +9,15 @@
 <body>
 <h1 class="text-info" align="center">QCM</h1>
 <div class="container" ng-app="qcmMinh">
-    <ng-view></ng-view>
+    <ul>
+        <li>
+            <a href="#!quiz">Quiz</a>
+        </li>
+        <li>
+            <a href='#!edit'>Edit</a>
+        </li>
+    </ul>
+    <div ng-view></div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>

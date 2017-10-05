@@ -23,13 +23,13 @@
             .config(['$routeProvider', function($routeProvider) {
                 $routeProvider
                     .when('/', {
-                        templateUrl: "/quiz.html"
+                        templateUrl: "quiz.html",
                     })
                     .when('/quiz', {
-                        templateUrl: '/quiz.html'
+                        templateUrl: 'quiz.html',
                     })
                     .when('/edit', {
-                        templateUrl: '/edit.html'
+                        templateUrl: 'edit.html',
                     })
                     .otherwise({redirectTo: '/'});
             }])
@@ -122,8 +122,11 @@
                                 good: 3
                             }]
                     }]
-                    $httpBackend.whenGET('/qcm').respond(l)
-                    $httpBackend.whenGET(new RegExp('\\/qcm\\/[0-9]+')).respond(l[0])
+                    $httpBackend.whenGET('/qcm').respond(l);
+                    $httpBackend.whenGET(new RegExp('\\/qcm\\/[0-9]+')).respond(l[0]);
+                    $httpBackend.whenGET("edit.html").passThrough();
+                    $httpBackend.whenGET("index.html").passThrough();
+                    $httpBackend.whenGET("quiz.html").passThrough();
                 }
             )
             .controller("quizCtrl", ['qcmListService', 'stateManagementQcm', '$rootScope', function (qcmListService, stateManagementQcm, $rootScope) {
