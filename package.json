@@ -1,0 +1,25 @@
+{
+  "name": "angular",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "jasmine": "^2.8.0",
+    "karma": "^1.7.1",
+    "karma-chrome-launcher": "^2.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "karma start karma.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minhhuyle/angularJS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/minhhuyle/angularJS/issues"
+  },
+  "homepage": "https://github.com/minhhuyle/angularJS#readme"
+}
