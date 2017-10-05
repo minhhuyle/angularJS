@@ -22,9 +22,13 @@
                 </button>
             </li>
         </ul>
-        <button class="btn" ng-class="quiz.activeBtn('ALL')" ng-click="quiz.filterAll()">Tous</button>
-        <button class="btn" ng-class="quiz.activeBtn('DONE')" ng-click="quiz.filterDone()">Répondus</button>
-        <button class="btn" ng-class="quiz.activeBtn('UNDONE')" ng-click="quiz.filterUndone()">Pas répondus</button>
+
+        <button ng-repeat="qcmFilter in quiz.getFiltersQcm() "
+                class="btn" ng-class="quiz.getFilterClass(qcmFilter.type)"
+                ng-click="quiz.setFilter(qcmFilter.type)">
+            {{qcmFilter.label}}
+        </button>
+
 
         <div class="alert alert-success" ng-if="quiz.getSelectedQcmTitle() && !quiz.isDone()">
             <h3>{{quiz.getSelectedQcmTitle()}} Selectionné</h3>
@@ -51,8 +55,6 @@
                 </button>
             </ul>
         </div>
-
-
 
 
     </div>
@@ -82,9 +84,6 @@
         </ul>
 
 
-
-
-
         <div class="alert alert-success" ng-if="edit.getSelectedQcm()">
             <div class="btn-group">
                 <button ng-click="edit.showPrevQuestion()" ng-disabled="edit.isFirstQuestion()"><</button>
@@ -93,9 +92,7 @@
             </div>
             <br/>
 
-            <button ng-click="edit.addNewQuestion()" >Ajouter une question</button>
-
-
+            <button ng-click="edit.addNewQuestion()">Ajouter une question</button>
 
 
             <div ng-if="!edit.disableEditionWhenNoQuestionPresent()">
@@ -103,7 +100,10 @@
                 <input type="text" ng-model="edit.getCurrentQuestionOfQcmSelected().enonce"/>
 
                 <br/>
-                <b>Reponses</b> <button ng-click="edit.addNewResponse()" ng-disabled="edit.disableAddResponseWhenItReach4()" >Ajouter une réponse</button>
+                <b>Reponses</b>
+                <button ng-click="edit.addNewResponse()" ng-disabled="edit.disableAddResponseWhenItReach4()">Ajouter une
+                    réponse
+                </button>
                 <br/>
                 <table>
                     <tr ng-repeat="response in edit.getCurrentQuestionOfQcmSelected().responses track by $index">

@@ -3,16 +3,20 @@
  */
 (function () {
         angular.module("qcmMinh", ["ngMockE2E", "ngResource"])
-            .filter('answer',['filterFilter', function(filterFilter) {
-                return function(qcmArray, type) {
-                    switch(type){
-                        case "ALL": return qcmArray;
-                        break;
-                        case "DONE": return filterFilter(qcmArray, {done:true});
-                        break;
-                        case "UNDONE": return filterFilter(qcmArray, {done:false});
-                        break;
-                        default: return qcmArray;
+            .filter('answer', ['filterFilter', function (filterFilter) {
+                return function (qcmArray, type) {
+                    switch (type) {
+                        case "ALL":
+                            return qcmArray;
+                            break;
+                        case "DONE":
+                            return filterFilter(qcmArray, {done: true});
+                            break;
+                        case "UNDONE":
+                            return filterFilter(qcmArray, {done: false});
+                            break;
+                        default:
+                            return qcmArray;
                     }
                 }
             }])
@@ -33,7 +37,7 @@
                 return this;
             }])
             .factory('qcmResource', ['$resource', function ($resource) {
-                return $resource('/qcm/:id', {id:'@id'});
+                return $resource('/qcm/:id', {id: '@id'});
             }])
             .factory('qcmListService', ['$http', 'qcmResource', function ($http, qcmResource) {
                 var self = this;
@@ -47,7 +51,7 @@
                     return self.qcm;
                 };
 
-                self.qcm.push(qcmResource.get({id:1}));
+                self.qcm.push(qcmResource.get({id: 1}));
 
                 return this;
             }])
@@ -114,6 +118,16 @@
                 //   $rootScope.state = "NORMAL";
 
                 self.type = "ALL";
+                self.types = [{
+                        label: "Tous", type: "ALL"
+                    },
+                    {
+                        label: "Répondu", type: "DONE"
+                    },
+                    {
+                        label: "Pas Répondu", type: "UNDONE"
+                    }];
+
                 self.changeMode = function () {
                     stateManagementQcm.changeMode();
                 };
@@ -126,20 +140,21 @@
                     return stateManagementQcm.returnState() == "NORMAL";
                 };
 
-                self.filterAll = function() {
-                    self.type = "ALL";
+
+                self.getFiltersQcm = function () {
+                    return self.types;
                 };
 
-                self.filterDone = function() {
-                    self.type = "DONE";
+
+                self.setFilter = function (type) {
+                    self.type = type;
                 };
 
-                self.filterUndone = function() {
-                    self.type = "UNDONE";
-                };
-
-                self.activeBtn = function(type) {
-                   return {'btn-primary': type == self.type}
+                self.getFilterClass = function(type){
+                    if(type == self.type){
+                        return "btn-primary";
+                    }
+                    return false;
                 };
 
                 self.selectQcm = function (qcm) {
@@ -338,7 +353,7 @@
                     self.selectedQcm.questions.push(newQuestion)
                 };
 
-                self.disableAddResponseWhenItReach4 = function(){
+                self.disableAddResponseWhenItReach4 = function () {
                     return self.selectedQcm.questions.length > 0 &&
                         self.selectedQcm.questions[self.selectedQcmIndex].responses.length >= 4;
                 }
