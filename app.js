@@ -4,8 +4,8 @@
 (function () {
 
 
-        angular.module("qcmMinh", ["ngMockE2E"])
-            .factory('stateManagementQcm', [function(){
+        angular.module("qcmMinh", ["ngMockE2E", "ngResource"])
+            .factory('stateManagementQcm', [function () {
                 var self = this;
 
                 self.state = "NORMAL";
@@ -15,13 +15,16 @@
                     return self.state;
                 };
 
-                self.returnState = function() {
+                self.returnState = function () {
                     return self.state;
                 };
 
                 return this;
             }])
-            .factory('qcmListService', ['$http', function ($http) {
+            .factory('qcmResource', ['$resource', function ($resource) {
+                return $resource('/qcm');
+            }])
+            .factory('qcmListService', ['$http', 'qcmResource', function ($http, qcmResource) {
                 var self = this;
                 self.qcm = [];
 
@@ -33,77 +36,70 @@
                     return self.qcm;
                 };
 
-                $http.get('/qcm').then(
-                    function (response) {
-                        response.data.forEach(ele=>self.qcm.push(ele));
-                    },
-                    function (error) {
-                        console.log(error);
-                    }
-                )
+                self.qcm = qcmResource.query();
 
                 return this;
             }])
             .run(function ($httpBackend) {
                     var l = [{
-                    title: "1er",
-                    done: false,
-                    replay: false,
-                    answersUser: [],
-                    indexQuestion: 0,
-                    score: 0,
-                    questions: [{
-                        enonce: "ABHHBHBB",
-                        responses: ["A", "B", "C", "D"],
-                        good: "A"
-                    },
-                        {
-                            enonce: "ABHklkHBHBB",
-                            responses: ["A", "B", "C", "D"],
-                            good: "B"
-                        }, {
-                            enonce: "Ckdoskdlskdd",
-                            responses: ["A", "B", "C", "D"],
-                            good: "C"
-                        },
-                        {
-                            enonce: "iijijijij",
+                        title: "1er",
+                        done: false,
+                        replay: false,
+                        answersUser: [],
+                        indexQuestion: 0,
+                        score: 0,
+                        questions: [{
+                            enonce: "ABHHBHBB",
                             responses: ["A", "B", "C", "D"],
                             good: "A"
-                        }]
-                },{
-                    title: "2ème",
-                    done: false,
-                    replay: false,
-                    answersUser: [],
-                    indexQuestion: 0,
-                    score: 0,
-                    questions: [{
-                        enonce: "ABHHBHBB",
-                        responses: ["A", "B", "C", "D"],
-                        good: "A"
-                    },
-                        {
-                            enonce: "ABHklkHBHBB",
-                            responses: ["A", "B", "C", "D"],
-                            good: "B"
-                        }, {
-                            enonce: "Ckdoskdlskdd",
-                            responses: ["A", "B", "C", "D"],
-                            good: "C"
                         },
-                        {
-                            enonce: "iijijijij",
+                            {
+                                enonce: "ABHklkHBHBB",
+                                responses: ["A", "B", "C", "D"],
+                                good: "B"
+                            }, {
+                                enonce: "Ckdoskdlskdd",
+                                responses: ["A", "B", "C", "D"],
+                                good: "C"
+                            },
+                            {
+                                enonce: "iijijijij",
+                                responses: ["A", "B", "C", "D"],
+                                good: "A"
+                            }]
+                    }, {
+                        title: "2ème",
+                        done: false,
+                        replay: false,
+                        answersUser: [],
+                        indexQuestion: 0,
+                        score: 0,
+                        questions: [{
+                            enonce: "ABHHBHBB",
                             responses: ["A", "B", "C", "D"],
                             good: "A"
-                        }]
-                }]
+                        },
+                            {
+                                enonce: "ABHklkHBHBB",
+                                responses: ["A", "B", "C", "D"],
+                                good: "B"
+                            }, {
+                                enonce: "Ckdoskdlskdd",
+                                responses: ["A", "B", "C", "D"],
+                                good: "C"
+                            },
+                            {
+                                enonce: "iijijijij",
+                                responses: ["A", "B", "C", "D"],
+                                good: "A"
+                            }]
+                    }]
                     $httpBackend.whenGET('/qcm').respond(l)
                 }
             )
             .controller("quizCtrl", ['qcmListService', 'stateManagementQcm', '$rootScope', function (qcmListService, stateManagementQcm, $rootScope) {
                 var self = this;
-             //   $rootScope.state = "NORMAL";
+                //   $rootScope.state = "NORMAL";
 
 
                 self.changeMode = function () {
