@@ -2,7 +2,7 @@
  * Created by minhhuyle on 04/10/2017.
  */
 (function () {
-        angular.module("qcmMinh", ["ngMockE2E", "ngResource"])
+        angular.module("qcmMinh", ["ngMockE2E", "ngResource", "ngRoute"])
             .filter('answer', ['filterFilter', function (filterFilter) {
                 return function (qcmArray, type) {
                     switch (type) {
@@ -20,7 +20,20 @@
                     }
                 }
             }])
-            .factory('stateManagementQcm', [function () {
+            .config(['$routeProvider', function($routeProvider) {
+                $routeProvider
+                    .when('/', {
+                        templateUrl: "/quiz.html"
+                    })
+                    .when('/quiz', {
+                        templateUrl: '/quiz.html'
+                    })
+                    .when('/edit', {
+                        templateUrl: '/edit.html'
+                    })
+                    .otherwise({redirectTo: '/'});
+            }])
+        .factory('stateManagementQcm', [function () {
                 var self = this;
 
                 self.state = "NORMAL";

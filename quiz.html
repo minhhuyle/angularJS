@@ -1,0 +1,49 @@
+<div ng-show="quiz.shouldShowNormalMode()" ng-controller="quizCtrl as quiz">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button ng-click="quiz.changeMode()" class="btn btn-warning">Mode normal</button>
+    </nav>
+
+    <ul class="list-group">
+        <br/>
+        <li ng-repeat="qcm in quiz.getAllQcms()|answer:quiz.type" class="list-group-item">
+            <button class="btn" ng-click="quiz.selectQcm(qcm)" ng-class="quiz.getClassFinishedQuiz(qcm)">
+                {{qcm.title}}
+            </button>
+        </li>
+    </ul>
+
+    <button ng-repeat="qcmFilter in quiz.getFiltersQcm() "
+            class="btn" ng-class="quiz.getFilterClass(qcmFilter.type)"
+            ng-click="quiz.setFilter(qcmFilter.type)">
+        {{qcmFilter.label}}
+    </button>
+
+
+    <div class="alert alert-success" ng-if="quiz.getSelectedQcmTitle() && !quiz.isDone()">
+        <h3>{{quiz.getSelectedQcmTitle()}} Selectionné</h3>
+        <h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>
+        <p>{{quiz.showQuestion()}}</p>
+        <ul>
+            <button ng-click="quiz.answerToQuestion(reponse)"
+                    ng-repeat="reponse in quiz.getSelectedQcmResponses()">
+                {{reponse}}
+            </button>
+        </ul>
+    </div>
+
+    <div ng-show="quiz.getSelectedQcmTitle() && quiz.isDone()" ng-class="quiz.showLevel()">
+        Score : {{quiz.showScore()}}
+    </div>
+
+    <div class="alert alert-success" ng-if="quiz.shouldShowReplay()">
+        <h3>{{quiz.getSelectedQcmTitle()}}</h3>
+        <h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>
+        <ul>
+            <button ng-class="quiz.showColorResponse(reponse)" ng-repeat="reponse in quiz.getSelectedQcmResponses()"
+                    ng-click="quiz.replayNextQuestion()">{{reponse}}
+            </button>
+        </ul>
+    </div>
+
+
+</div>

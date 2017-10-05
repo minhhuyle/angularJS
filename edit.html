@@ -1,0 +1,60 @@
+<div ng-show="edit.shouldShowEditMode()" ng-controller="editCtrl as edit">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button ng-click="edit.changeMode()" class="btn btn-info">Mode Edition</button>
+    </nav>
+
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="qcm in edit.getAllQcms()">
+            <button class="btn" ng-click="edit.selectQcm(qcm)">
+                {{qcm.title}}
+            </button>
+        </li>
+
+        <li class="list-group-item">
+            <button class="btn btn-danger" ng-click="edit.addQCM()">Créer</button>
+
+            <div ng-show="edit.shouldShowInputQCM()">
+                <form ng-submit="edit.submitQcm()" name="newQcm">
+                    <p>QCM : <input ng-model="edit.qcmTitle" required type="text"></p>
+                    <button ng-disabled="newQcm.$invalid" type="submit" class="btn">Valider</button>
+                </form>
+            </div>
+        </li>
+    </ul>
+
+
+    <div class="alert alert-success" ng-if="edit.getSelectedQcm()">
+        <div class="btn-group">
+            <button ng-click="edit.showPrevQuestion()" ng-disabled="edit.isFirstQuestion()"><</button>
+            <h2>{{edit.getSelectedQcm().title}}</h2>
+            <button ng-click="edit.showNextQuestion()" ng-disabled="edit.isLastQuestion()">></button>
+        </div>
+        <br/>
+
+        <button ng-click="edit.addNewQuestion()">Ajouter une question</button>
+
+
+        <div ng-if="!edit.disableEditionWhenNoQuestionPresent()">
+            <b>Question </b>
+            <input type="text" ng-model="edit.getCurrentQuestionOfQcmSelected().enonce"/>
+
+            <br/>
+            <b>Reponses</b>
+            <button ng-click="edit.addNewResponse()" ng-disabled="edit.disableAddResponseWhenItReach4()">Ajouter une
+                réponse
+            </button>
+            <br/>
+            <table>
+                <tr ng-repeat="response in edit.getCurrentQuestionOfQcmSelected().responses track by $index">
+                    <td>
+                        <input type="radio" name="good" ng-model="edit.getCurrentQuestionOfQcmSelected().good"
+                               ng-value="$index"/>
+                        <input type="text" ng-value="response"
+                               ng-model="edit.getCurrentQuestionOfQcmSelected().responses[$index]"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
