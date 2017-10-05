@@ -2,8 +2,6 @@
  * Created by minhhuyle on 04/10/2017.
  */
 (function () {
-
-
         angular.module("qcmMinh", ["ngMockE2E", "ngResource"])
             .factory('stateManagementQcm', [function () {
                 var self = this;
@@ -51,21 +49,21 @@
                         questions: [{
                             enonce: "ABHHBHBB",
                             responses: ["A", "B", "C", "D"],
-                            good: "A"
+                            good: 1
                         },
                             {
                                 enonce: "ABHklkHBHBB",
                                 responses: ["A", "B", "C", "D"],
-                                good: "B"
+                                good: 0
                             }, {
                                 enonce: "Ckdoskdlskdd",
                                 responses: ["A", "B", "C", "D"],
-                                good: "C"
+                                good: 2
                             },
                             {
                                 enonce: "iijijijij",
                                 responses: ["A", "B", "C", "D"],
-                                good: "A"
+                                good: 3
                             }]
                     }, {
                         title: "2ème",
@@ -77,21 +75,21 @@
                         questions: [{
                             enonce: "ABHHBHBB",
                             responses: ["A", "B", "C", "D"],
-                            good: "A"
+                            good: 1
                         },
                             {
                                 enonce: "ABHklkHBHBB",
                                 responses: ["A", "B", "C", "D"],
-                                good: "B"
+                                good: 0
                             }, {
                                 enonce: "Ckdoskdlskdd",
                                 responses: ["A", "B", "C", "D"],
-                                good: "C"
+                                good: 2
                             },
                             {
                                 enonce: "iijijijij",
                                 responses: ["A", "B", "C", "D"],
-                                good: "A"
+                                good: 3
                             }]
                     }]
                     $httpBackend.whenGET('/qcm').respond(l)
@@ -202,7 +200,10 @@
 
                 self.showColorResponse = function (reponse) {
                     var myResponse = self.selectedQcm.answersUser[self.selectedQcm.indexQuestion];
-                    var goodResponse = self.selectedQcm.questions[self.selectedQcm.indexQuestion].good;
+
+                    var indexOfGoodResponse = self.selectedQcm.questions[self.selectedQcm.indexQuestion].good;
+                    var goodResponse = self.selectedQcm.questions[self.selectedQcm.indexQuestion]
+                        .responses[indexOfGoodResponse];
 
                     if (reponse == goodResponse) {
                         return "btn-success";
@@ -247,25 +248,7 @@
                         answersUser: [],
                         indexQuestion: 0,
                         score: 0,
-                        questions: [{
-                            enonce: "ABHHBHBB",
-                            responses: ["A", "B", "C", "D"],
-                            good: "A"
-                        },
-                            {
-                                enonce: "ABHklkHBHBB",
-                                responses: ["A", "B", "C", "D"],
-                                good: "B"
-                            }, {
-                                enonce: "Ckdoskdlskdd",
-                                responses: ["A", "B", "C", "D"],
-                                good: "C"
-                            },
-                            {
-                                enonce: "iijijijij",
-                                responses: ["A", "B", "C", "D"],
-                                good: "A"
-                            }]
+                        questions: []
                     };
                     qcmListService.addNewQcm(newQcm);
 
@@ -284,8 +267,56 @@
 
                 self.selectQcm = function (qcm) {
                     self.selectedQcm = qcm;
+                    self.selectedQcmIndex = 0;
+                };
+
+
+                self.getSelectedQcm = function () {
+                    return self.selectedQcm;
+                };
+
+                self.getCurrentQuestionOfQcmSelected = function () {
+                    return self.selectedQcm.questions[self.selectedQcmIndex];
+                };
+
+                self.isFirstQuestion = function () {
+                    return self.selectedQcmIndex == 0;
+                };
+
+                self.isLastQuestion = function () {
+                    return (self.selectedQcmIndex >= self.selectedQcm.questions.length - 1);
+                };
+
+                self.showNextQuestion = function () {
+                    self.selectedQcmIndex++;
+                };
+
+                self.showPrevQuestion = function () {
+                    self.selectedQcmIndex--;
+                };
+
+                self.addNewResponse = function () {
+                    var responses = self.selectedQcm.questions[self.selectedQcmIndex].responses;
+                    responses.push("Réponse " + (responses.length + 1));
+                };
+
+                self.addNewQuestion = function () {
+                    var newQuestion = {
+                        enonce: "Enonce",
+                        responses: ["Réponses 1", "Réponses 2"],
+                        good: 0
+                    };
+                    self.selectedQcm.questions.push(newQuestion)
+                };
+
+                self.disableAddResponseWhenItReach4 = function(){
+                    return self.selectedQcm.questions.length > 0 &&
+                        self.selectedQcm.questions[self.selectedQcmIndex].responses.length >= 4;
                 }
 
+                self.disableEditionWhenNoQuestionPresent = function () {
+                    return self.selectedQcm.questions <= 0;
+                }
             }
             ])
         ;
