@@ -24,7 +24,7 @@
         </ul>
 
 
-        <div ng-if="quiz.getSelectedQcmTitle() && !quiz.isDone()">
+        <div class="alert alert-success" ng-if="quiz.getSelectedQcmTitle() && !quiz.isDone()">
             <h3>{{quiz.getSelectedQcmTitle()}} Selectionné</h3>
             <h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>
             <p>{{quiz.showQuestion()}}</p>
@@ -40,7 +40,7 @@
             Score : {{quiz.showScore()}}
         </div>
 
-        <div ng-if="quiz.shouldShowReplay()">
+        <div class="alert alert-success" ng-if="quiz.shouldShowReplay()">
             <h3>{{quiz.getSelectedQcmTitle()}}</h3>
             <h4>Question numéro {{quiz.getIndexOfQuestion()}}</h4>
             <ul>
@@ -83,7 +83,7 @@
 
 
 
-        <div ng-if="edit.getSelectedQcm()">
+        <div class="alert alert-success" ng-if="edit.getSelectedQcm()">
             <div class="btn-group">
                 <button ng-click="edit.showPrevQuestion()" ng-disabled="edit.isFirstQuestion()"><</button>
                 <h2>{{edit.getSelectedQcm().title}}</h2>

@@ -20,7 +20,7 @@
                 return this;
             }])
             .factory('qcmResource', ['$resource', function ($resource) {
-                return $resource('/qcm');
+                return $resource('/qcm/:id', {id:'@id'});
             }])
             .factory('qcmListService', ['$http', 'qcmResource', function ($http, qcmResource) {
                 var self = this;
@@ -34,7 +34,7 @@
                     return self.qcm;
                 };
 
-                self.qcm = qcmResource.query();
+                self.qcm.push(qcmResource.get({id:1}));
 
                 return this;
             }])
@@ -93,6 +93,7 @@
                             }]
                     }]
                     $httpBackend.whenGET('/qcm').respond(l)
+                    $httpBackend.whenGET(new RegExp('\\/qcm\\/[0-9]+')).respond(l[0])
                 }
             )
             .controller("quizCtrl", ['qcmListService', 'stateManagementQcm', '$rootScope', function (qcmListService, stateManagementQcm, $rootScope) {
