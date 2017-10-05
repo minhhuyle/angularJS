@@ -3,6 +3,19 @@
  */
 (function () {
         angular.module("qcmMinh", ["ngMockE2E", "ngResource"])
+            .filter('answer',['filterFilter', function(filterFilter) {
+                return function(qcmArray, type) {
+                    switch(type){
+                        case "ALL": return qcmArray;
+                        break;
+                        case "DONE": return filterFilter(qcmArray, {done:true});
+                        break;
+                        case "UNDONE": return filterFilter(qcmArray, {done:false});
+                        break;
+                        default: return qcmArray;
+                    }
+                }
+            }])
             .factory('stateManagementQcm', [function () {
                 var self = this;
 
@@ -100,7 +113,7 @@
                 var self = this;
                 //   $rootScope.state = "NORMAL";
 
-
+                self.type = "ALL";
                 self.changeMode = function () {
                     stateManagementQcm.changeMode();
                 };
@@ -113,6 +126,17 @@
                     return stateManagementQcm.returnState() == "NORMAL";
                 };
 
+                self.filterAll = function() {
+                    self.type = "ALL";
+                };
+
+                self.filterDone = function() {
+                    self.type = "DONE";
+                };
+
+                self.filterUndone = function() {
+                    self.type = "UNDONE";
+                };
 
                 self.selectQcm = function (qcm) {
                     self.selectedQcm = qcm;

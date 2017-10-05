@@ -16,13 +16,15 @@
 
         <ul class="list-group">
             <br/>
-            <li ng-repeat="qcm in quiz.getAllQcms()" class="list-group-item">
+            <li ng-repeat="qcm in quiz.getAllQcms()|answer:quiz.type" class="list-group-item">
                 <button class="btn" ng-click="quiz.selectQcm(qcm)" ng-class="quiz.getClassFinishedQuiz(qcm)">
                     {{qcm.title}}
                 </button>
             </li>
         </ul>
-
+        <button class="btn" ng-class="quiz.filterAll()" ng-click="quiz.filterAll()">Tous</button>
+        <button class="btn" ng-click="quiz.filterDone()">Répondus</button>
+        <button class="btn" ng-click="quiz.filterUndone()">Pas répondus</button>
 
         <div class="alert alert-success" ng-if="quiz.getSelectedQcmTitle() && !quiz.isDone()">
             <h3>{{quiz.getSelectedQcmTitle()}} Selectionné</h3>
