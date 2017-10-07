@@ -32,4 +32,8 @@ export class QcmAppComponent implements OnInit {
     labelQcm.value = "";
     this.qcms.push(qcm);
   }
+
+  getClassListQcm(even){
+    return (even) ? "list-group-item-light" : "";
+  }
 }

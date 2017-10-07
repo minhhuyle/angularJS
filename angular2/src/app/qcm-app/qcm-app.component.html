@@ -1,15 +1,55 @@
-<h1>QCMs disponibles</h1>
-<ul>
-  <li *ngFor="let qcm of qcms" (click)="setCurrentQcm(qcm)"><h2>{{ qcm.label }}</h2></li>
-</ul>
-<h1 *ngIf="currentQcm">{{ currentQcm.label }} sélectionné</h1>
+<div class="container">
+  <h1>QCMs disponibles</h1>
+  <ul class="list-group">
+    <li *ngFor="let qcm of qcms; let evenQcm = even" [ngClass]="getClassListQcm(evenQcm)" (click)="setCurrentQcm(qcm)"
+        class="list-group-item list-group-item-action">
+      <h2>
+        <button class="btn">
+          {{ qcm.label }}
+        </button>
+      </h2>
+    </li>
+  </ul>
 
 
-<button class="btn btn-info" (click)="onClickCreateNewQcm()">Create new QCM</button>
-<div class="container" *ngIf="showCreateQcm">
-  <form>
-    Title Qcm : <input type="text" #labelQcm/>
-    <input (click)="createNewQcm(labelQcm)" class="btn btn-success" type="submit" value="Submit"/>
-  </form>
+  <div class="container" *ngIf="currentQcm">
+    <hr/>
+
+    <h3>Play {{ currentQcm.label }} sélectionné</h3>
+
+    <div class="card text-center">
+      <div class="card-header">
+        <h4>Question {{currentQcm.getCurrentQuestion().statement}}</h4>
+      </div>
+
+      <div class="card-body row">
+        <div class="col-6 card" *ngFor="let response of currentQcm.getCurrentResponses().datas;">
+          {{response}}
+        </div>
+      </div>
+
+      <div class="card-footer text-muted">
+        <button class="btn btn-warning">Submit</button>
+      </div>
+    </div>
+  </div>
+
+
+  <hr/>
+  <button class="btn btn-info" (click)="onClickCreateNewQcm()">Create new QCM</button>
+  <div class="container" *ngIf="showCreateQcm">
+
+      Title Qcm : <input type="text" #labelQcm/>
+      <input (click)="createNewQcm(labelQcm)" class="btn btn-success" type="submit" value="Submit"/>
+  </div>
+  <hr/>
+
+  <div class="container">
+
+  </div>
+
 
 </div>
+
+
+
