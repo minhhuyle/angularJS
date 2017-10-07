@@ -15,6 +15,7 @@
 
 <div class="card border-light" [ngSwitch]="appSelected">
   <div class="card-body" *ngSwitchCase="'QCM'">
+    <qcm-app></qcm-app>
   </div>
   <div class="card-body" *ngSwitchCase="'Movies'">
     <movies-app></movies-app>

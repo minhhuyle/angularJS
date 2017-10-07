@@ -1,0 +1,15 @@
+<h1>QCMs disponibles</h1>
+<ul>
+  <li *ngFor="let qcm of qcms" (click)="setCurrentQcm(qcm)"><h2>{{ qcm.label }}</h2></li>
+</ul>
+<h1 *ngIf="currentQcm">{{ currentQcm.label }} sélectionné</h1>
+
+
+<button class="btn btn-info" (click)="onClickCreateNewQcm()">Create new QCM</button>
+<div class="container" *ngIf="showCreateQcm">
+  <form>
+    Title Qcm : <input type="text" #labelQcm/>
+    <input (click)="createNewQcm(labelQcm)" class="btn btn-success" type="submit" value="Submit"/>
+  </form>
+
+</div>
