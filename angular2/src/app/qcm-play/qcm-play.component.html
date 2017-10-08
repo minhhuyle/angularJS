@@ -1,0 +1,21 @@
+<div class="container" *ngIf="currentQcm">
+  <hr/>
+
+  <h3>Play {{ currentQcm.label }} sélectionné</h3>
+
+  <div class="card text-center">
+    <div class="card-header">
+      <h4>Question {{currentQcm.getCurrentQuestion().statement}}</h4>
+    </div>
+
+    <div class="card-body row">
+      <div class="col-6 card" *ngFor="let response of currentQcm.getCurrentResponses().datas;">
+        {{response}}
+      </div>
+    </div>
+
+    <div class="card-footer text-muted">
+      <button class="btn btn-warning">Submit</button>
+    </div>
+  </div>
+</div>
