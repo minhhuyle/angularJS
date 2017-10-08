@@ -5,8 +5,9 @@ import { AppComponent } from './app.component';
 import { MoviesAppComponent } from './movies-app/movies-app.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
 import { NavAppComponent } from './nav-app/nav-app.component';
-import { QcmAppComponent } from './qcm-app/qcm-app.component';
-import { QcmPlayComponent } from './qcm-play/qcm-play.component';
+import { QcmAppComponent } from './qcm/qcm-app/qcm-app.component';
+import { QcmPlayComponent } from './qcm/qcm-play/qcm-play.component';
+import { QcmListComponent } from './qcm/qcm-list/qcm-list.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { QcmPlayComponent } from './qcm-play/qcm-play.component';
     MoviesListComponent,
     NavAppComponent,
     QcmAppComponent,
-    QcmPlayComponent
+    QcmPlayComponent,
+    QcmListComponent
   ],
   imports: [
     BrowserModule

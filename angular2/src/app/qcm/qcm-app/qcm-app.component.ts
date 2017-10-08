@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Qcm} from "../qcm/model/qcm";
+import {Qcm} from "../model/qcm";
 
 @Component({
   selector: 'qcm-app',

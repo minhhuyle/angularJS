@@ -1,19 +1,6 @@
 <div class="container">
-  <h1>QCMs disponibles</h1>
-  <ul class="list-group">
-    <li *ngFor="let qcm of qcms; let evenQcm = even" [ngClass]="getClassListQcm(evenQcm)" (click)="setCurrentQcm(qcm)"
-        class="list-group-item list-group-item-action">
-      <h2>
-        <button class="btn">
-          {{ qcm.label }}
-        </button>
-      </h2>
-    </li>
-  </ul>
-
+  <qcm-list></qcm-list>
   <qcm-play [currentQcm]="currentQcm"></qcm-play>
-
-
 
   <hr/>
   <button class="btn btn-info" (click)="onClickCreateNewQcm()">Create new QCM</button>
