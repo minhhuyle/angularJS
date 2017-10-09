@@ -10,7 +10,7 @@ export class QcmAppComponent implements OnInit {
 
   qcms: Array<Qcm> = [];
   showCreateQcm: boolean = false;
-  currentQcm: string = null;
+  currentQcm: Qcm = null;
 
   constructor() {
   }
@@ -18,9 +18,6 @@ export class QcmAppComponent implements OnInit {
   ngOnInit() {
   }
 
-  setCurrentQcm(qcm: string): void {
-    this.currentQcm = qcm;
-  }
 
   onClickCreateNewQcm():void {
     this.showCreateQcm = !this.showCreateQcm;
@@ -33,7 +30,4 @@ export class QcmAppComponent implements OnInit {
     this.qcms.push(qcm);
   }
 
-  getClassListQcm(even){
-    return (even) ? "list-group-item-light" : "";
-  }
 }
