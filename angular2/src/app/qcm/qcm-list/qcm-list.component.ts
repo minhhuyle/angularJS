@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {Qcm} from "../model/qcm";
 
 @Component({
@@ -11,10 +11,11 @@ export class QcmListComponent implements OnInit {
   @Input()
   qcms: Array<Qcm>;
 
-
   @Input()
   currentQcm: Qcm;
 
+  @Output()
+  updateCurrentQcm :EventEmitter<Qcm> = new EventEmitter<Qcm>();
 
   constructor() { }
 
@@ -27,6 +28,7 @@ export class QcmListComponent implements OnInit {
 
   setCurrentQcm(qcm: Qcm): void {
     this.currentQcm = qcm;
+    this.updateCurrentQcm.emit(this.currentQcm);
   }
 
 }

@@ -30,4 +30,8 @@ export class QcmAppComponent implements OnInit {
     this.qcms.push(qcm);
   }
 
+  setCurrentQcm(qcm: Qcm){
+    this.currentQcm = qcm;
+    console.log(JSON.stringify(qcm));
+  }
 }

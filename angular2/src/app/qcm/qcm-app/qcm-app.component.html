@@ -1,7 +1,8 @@
 <div class="container">
-  <qcm-list [qcms]="qcms" [currentQcm]="currentQcm"></qcm-list>
-  <qcm-play [currentQcm]="currentQcm"></qcm-play>
+  <qcm-list [qcms]="qcms" [currentQcm]="currentQcm" (updateCurrentQcm)="setCurrentQcm($event)"></qcm-list>
+  <qcm-play [currentQcm]="currentQcm" ></qcm-play>
 
+  <p ></p>
   <hr/>
   <button class="btn btn-info" (click)="onClickCreateNewQcm()">Create new QCM</button>
   <div class="container" *ngIf="showCreateQcm">

@@ -1,4 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
+import {Qcm} from "../model/qcm";
 
 @Component({
   selector: 'qcm-play',
@@ -8,7 +9,7 @@ import {Component, OnInit, Input} from '@angular/core';
 export class QcmPlayComponent implements OnInit {
 
   @Input()
-  currentQcm : any;
+  currentQcm : Qcm;
 
   constructor() { }
 
