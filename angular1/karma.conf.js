@@ -20,7 +20,8 @@ module.exports = function(config) {
         './node_modules/angular-resource/angular-resource.js',          // ui-router
         './node_modules/angular-mocks/angular-mocks.js',
         'src/app.js',
-        "src/specs/quizCtrlSpec.js"
+        'src/app/**/assembly.js',
+        "src/**/*Spec.js"
     ],
 
 

@@ -1,6 +1,6 @@
 describe('Controller: ListCtrl', function() {
     // Instantiate a new version of my module before each test
-    beforeEach(module('qcmMinh'));
+    beforeEach(module('quiz-app'));
     var ctrl;
     // Before each unit test, instantiate a new instance of the controller
     beforeEach(inject(function($controller) {
