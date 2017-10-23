@@ -17,15 +17,16 @@
   },
   "homepage": "https://github.com/minhhuyle/angularJS#readme",
   "dependencies": {
-    "jasmine": "^2.8.0",
-    "karma": "^1.7.1",
-    "karma-chrome-launcher": "^2.2.0"
+    "karma": "^1.7.1"
   },
   "devDependencies": {
     "angular": "^1.6.6",
     "angular-mocks": "^1.6.6",
     "angular-resource": "^1.6.6",
     "angular-route": "^1.6.6",
-    "angular-ui-router": "^0.4.3"
+    "angular-ui-router": "^0.4.3",
+    "jasmine": "^2.8.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.0"
   }
 }

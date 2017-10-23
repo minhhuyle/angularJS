@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '../),
+    basePath: '',
 
 
     // frameworks to use
@@ -19,8 +19,8 @@ module.exports = function(config) {
         './node_modules/angular-route/angular-route.js',                             // angular
         './node_modules/angular-resource/angular-resource.js',          // ui-router
         './node_modules/angular-mocks/angular-mocks.js',
-        'app.js',
-        "specs/quizCtrlSpec.js"
+        'src/app.js',
+        "src/specs/quizCtrlSpec.js"
     ],
 
 

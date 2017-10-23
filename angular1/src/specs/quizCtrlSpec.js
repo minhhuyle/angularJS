@@ -4,10 +4,10 @@ describe('Controller: ListCtrl', function() {
     var ctrl;
     // Before each unit test, instantiate a new instance of the controller
     beforeEach(inject(function($controller) {
-        //ctrl = $controller('quizCtrl');
+        ctrl = $controller('quizCtrl');
     }));
     it('should have items available on load', function() {
-        //expect(ctrl.type).toEqual("ALL");
+        expect(ctrl.type).toEqual("ALL");
     });
 
 });
