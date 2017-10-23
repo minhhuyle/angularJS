@@ -11,9 +11,6 @@ export class QcmListComponent implements OnInit {
   @Input()
   qcms: Array<Qcm>;
 
-  @Input()
-  currentQcm: Qcm;
-
   @Output()
   updateCurrentQcm :EventEmitter<Qcm> = new EventEmitter<Qcm>();
 
@@ -27,8 +24,7 @@ export class QcmListComponent implements OnInit {
   }
 
   setCurrentQcm(qcm: Qcm): void {
-    this.currentQcm = qcm;
-    this.updateCurrentQcm.emit(this.currentQcm);
+    this.updateCurrentQcm.emit(qcm);
   }
 
 }
