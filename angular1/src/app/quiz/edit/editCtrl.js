@@ -3,6 +3,12 @@
  */
 (function () {
         angular.module("quiz-app")
+            .config(['$routeProvider', function($routeProvider) {
+                $routeProvider
+                    .when('/edit', {
+                        templateUrl: 'app/quiz/edit/edit.html',
+                    })
+            }])
             .controller("editCtrl", ['qcmListService', '$rootScope', function (qcmListService) {
 
                 var self = this;

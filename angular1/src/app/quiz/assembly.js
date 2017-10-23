@@ -23,13 +23,10 @@
             .config(['$routeProvider', function($routeProvider) {
                 $routeProvider
                     .when('/', {
-                        templateUrl: "app/quiz/quiz.html",
+                        templateUrl: "app/quiz/game/game.html",
                     })
                     .when('/quiz', {
-                        templateUrl: 'app/quiz/quiz.html',
-                    })
-                    .when('/edit', {
-                        templateUrl: 'app/quiz/edit/edit.html',
+                        templateUrl: 'app/quiz/game/game.html',
                     })
                     .otherwise({redirectTo: '/'});
             }])
@@ -111,7 +108,7 @@
                     $httpBackend.whenGET(new RegExp('[A-z]+')).passThrough();
                 }
             )
-            .controller("quizCtrl", ['qcmListService',
+            .controller("gameCtrl", ['qcmListService',
                 function (qcmListService) {
                     var self = this;
 
