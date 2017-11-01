@@ -31,6 +31,7 @@ module.exports = function(config) {
         './node_modules/angular-mocks/angular-mocks.js',
         'src/app.js',
         'src/app/**/assembly.js',
+        'src/app/**/*Ctrl.js',
         "src/**/*Spec.js"
     ],
 
