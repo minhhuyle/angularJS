@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Qcm, Qcms} from "./shared/models/qcms.model";
 
 @Component({
   selector: 'app-qcms',
@@ -7,21 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QcmsComponent implements OnInit {
 
-  qcms: Array<string> = [
-    'JAVA',
-    'PHP',
-    'JavaScript',
-    'HTML'
-  ];
+  qcms: Qcms = new Qcms();
 
-  currentQcm: string = null;
+  currentQcm: Qcm = null;
 
-  constructor() { }
+  constructor() {
+    this.qcms.add("JAVA");
+    this.qcms.add("PHP");
+    this.qcms.add("JavaScript");
+    this.qcms.add("HTML");
+  }
 
   ngOnInit() {
   }
 
-  setCurrentQcm(qcm: string): void {
+  setCurrentQcm(qcm: Qcm): void {
     this.currentQcm = qcm;
   }
 

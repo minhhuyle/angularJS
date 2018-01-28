@@ -1,7 +1,15 @@
-<h1>QCMs disponibles</h1>
-<ul>
-  <li *ngFor="let qcm of qcms" (click)="setCurrentQcm(qcm)">
-    <h2>{{ qcm }}</h2>
-  </li>
-</ul>
-<h1 *ngIf="currentQcm">{{ currentQcm }} sélectionné</h1>
+<div class="container">
+  <h1>QCMs disponibles</h1>
+  <ul>
+    <li *ngFor="let qcm of qcms.getDatas()" (click)="setCurrentQcm(qcm)">
+      <h2>{{ qcm.label }}</h2>
+    </li>
+  </ul>
+
+  <div *ngIf="currentQcm">
+    <h1 >{{ currentQcm.label }} sélectionné</h1>
+    <app-questions [questions]="currentQcm.questions"></app-questions>
+  </div>
+
+</div>
+
