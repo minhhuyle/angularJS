@@ -1,5 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Question, Questions} from "../shared/models/questions.model";
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-questions',
@@ -8,22 +7,9 @@ import {Question, Questions} from "../shared/models/questions.model";
 })
 export class QuestionsComponent implements OnInit {
 
-  @Input() questions: Questions;
-  currentQuestion: Question;
-
-  constructor() {
-
-  }
+  constructor() { }
 
   ngOnInit() {
-    this.currentQuestion = this.questions.getFirst();
   }
 
-  getLabel(){
-    return this.currentQuestion.label;
-  }
-
-  getAnswers() {
-    return this.currentQuestion.getAnswers();
-  }
 }

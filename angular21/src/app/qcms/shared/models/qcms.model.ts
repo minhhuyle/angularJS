@@ -1,34 +1,26 @@
-import {Questions} from "./questions.model";
-
-export class Qcms {
-
-  datas: Array<Qcm> = [];
-
-  constructor() {
-  }
-
-  add(label: string) {
-    this.datas.push(new Qcm(label));
-  }
-
-  getDatas(): Array<Qcm> {
-    return this.datas;
-  }
-}
-
-
 export class Qcm {
 
   label: string = "";
-  questions: Questions = new Questions();
+  questions: Array<Question> = [];
 
   constructor(label: string) {
     this.label = label;
-    this.addDefault();
   }
+}
 
-  addDefault() {
-    this.questions.add("Q1");
-    this.questions.add("Q2");
+export class Question {
+
+  label: string = "";
+  answers: Array<Answer> = [];
+}
+
+export class Answer {
+
+  label: string = "";
+  valid: boolean = false;
+
+  constructor(label: string, valid: boolean) {
+    this.label = label;
+    this.valid = valid;
   }
 }

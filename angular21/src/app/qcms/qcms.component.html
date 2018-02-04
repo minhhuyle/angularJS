@@ -1,15 +1,84 @@
 <div class="container">
-  <h1>QCMs disponibles</h1>
-  <ul>
-    <li *ngFor="let qcm of qcms.getDatas()" (click)="setCurrentQcm(qcm)">
-      <h2>{{ qcm.label }}</h2>
-    </li>
-  </ul>
+
+  <div class="card text-center">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li *ngFor="let playMode of getPlayModes()" class="nav-item">
+          <a class="nav-link" [ngClass]="{active:isCurrentPlayMode(playMode)}"
+             (click)="setCurrentPlayMode(playMode)"
+             href="#">{{playMode}}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card-body text-left">
+      <ng-container *ngIf="shouldShowEditPlayMode()">
+        <div *ngIf="shouldShowQcms()" class="card" style="width: 18rem;">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center"
+                *ngFor="let qcm of getQcms();" [ngClass]="{active: isCurrentSelectedQcm(qcm)}">
+              {{qcm.label}}
+              <span class="badge badge-default badge-pill" (click)="selectQcmToEdit(qcm)">
+                <button class="btn">Edit</button>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <button (click)="showOrHideQcm()" type="button" class="btn btn-info">Create New Qcm</button>
+        <hr/>
+
+        <div *ngIf="shouldShowCreateQcm()">
+          <h4>New Qcm</h4>
+          <form (ngSubmit)="registerQcm(qcmForm)" #qcmForm="ngForm">
+            <label>QCM label :
+              <input type="text" name="label" [(ngModel)]="qcmForm.label" required/>
+            </label>
+            <input class="btn" type="submit" [disabled]="qcmForm.form.invalid" value="Register"/>
+          </form>
+        </div>
+
+        <div *ngIf="shouldShowSelectedQcmToEdit()">
+          <h4>Qcm : {{getSelectedQcmLabel()}}</h4>
+
+        </div>
+
+      </ng-container>
+
+
+      <ng-container *ngIf="shouldShowVisualizationPlayMode()">
+        <h4>QCMs disponibles</h4>
+
+        <div *ngIf="shouldShowQcms()" class="card" style="width: 18rem;">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let qcm of getQcms()" [textContent]="qcm.label"></li>
+          </ul>
+        </div>
+
+       <!-- <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>-->
+      </ng-container>
+
+    </div>
+  </div>
+
+
+  <!--<div class="card">
+    <div class="card-body">
+      <ul>
+        <li *ngFor="let qcm of qcms.getDatas()" (click)="setCurrentQcm(qcm)">
+          <h4>{{ qcm.label }}</h4>
+        </li>
+      </ul>
+    </div>
+  </div>
+
 
   <div *ngIf="currentQcm">
     <h1 >{{ currentQcm.label }} sélectionné</h1>
     <app-questions [questions]="currentQcm.questions"></app-questions>
-  </div>
+  </div>-->
 
 </div>
 
