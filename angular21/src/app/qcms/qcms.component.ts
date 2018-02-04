@@ -9,9 +9,7 @@ import {Qcm} from "./shared/models/qcms.model";
 export class QcmsComponent implements OnInit {
 
   playMode: any = PlayMode.EDIT;
-  createButtonQcmState: boolean = false;
   qcms: Array<Qcm> = [];
-  qcmSelected: Qcm = null;
 
   constructor() {
   }
@@ -39,45 +37,12 @@ export class QcmsComponent implements OnInit {
     return this.playMode === PlayMode.EDIT;
   }
 
-  showOrHideQcm() {
-    this.createButtonQcmState = !this.createButtonQcmState;
-    if(this.createButtonQcmState){
-      this.qcmSelected = null;
-    }
-  }
-
-  shouldShowCreateQcm() {
-    return this.createButtonQcmState;
-  }
-
-  registerQcm(qcmForm) {
-    this.qcms.push(new Qcm(qcmForm.value.label));
-    qcmForm.reset();
-  }
-
   getQcms(){
     return this.qcms;
   }
 
   shouldShowQcms() {
     return this.qcms.length > 0;
-  }
-
-  selectQcmToEdit(qcm: Qcm) {
-    this.qcmSelected = qcm;
-    this.createButtonQcmState = false;
-  }
-
-  shouldShowSelectedQcmToEdit(){
-    return this.qcmSelected !== null;
-  }
-
-  isCurrentSelectedQcm(qcm: Qcm) {
-    return this.qcmSelected === qcm;
-  }
-
-  getSelectedQcmLabel(){
-    return this.qcmSelected.label;
   }
 }
 

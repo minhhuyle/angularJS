@@ -1,3 +1,57 @@
-<p>
-  qcms-edit works!
-</p>
+
+  <button *ngIf="shouldShowQuestions() || shouldShowAnswers()" (click)="backToQcms()" class="btn btn-dark">
+    &#8592; Qcms
+  </button>
+
+  <button *ngIf="shouldShowAnswers()" (click)="backToQuestions()" class="btn btn-dark">
+    &#8592; Question
+  </button>
+
+<div class="card" style="width: 33rem;">
+
+  <ng-container *ngIf="shouldShowQcms()">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item d-flex justify-content-between align-items-center"
+          *ngFor="let qcm of getQcms();">
+        {{qcm.label}}
+        <span class="badge badge-default badge-pill" (click)="selectQcmToEdit(qcm)">
+          <button class="btn">Edit</button>
+        </span>
+      </li>
+    </ul>
+
+    <div>
+      <form (ngSubmit)="registerQcm(qcmForm)" #qcmForm="ngForm">
+        <label>QCM label :
+          <input type="text" name="label" [(ngModel)]="qcmForm.label" required/>
+        </label>
+        <input class="btn" type="submit" [disabled]="qcmForm.form.invalid" value="Register"/>
+      </form>
+    </div>
+  </ng-container>
+
+
+  <ng-container *ngIf="shouldShowQuestions()">
+    <h4>Qcm : {{getSelectedQcmLabel()}}</h4>
+
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item d-flex justify-content-between align-items-center"
+          *ngFor="let question of getCurrentQuestions();">
+        {{question.label}}
+        <span class="badge badge-default badge-pill" (click)="selectQuestionToEdit(question)">
+          <button class="btn">Edit</button>
+        </span>
+      </li>
+    </ul>
+
+    <div *ngIf="shouldShowSelectedQcmToEdit()">
+      <form (ngSubmit)="registerQuestion(questionForm)" #questionForm="ngForm">
+        <label>Question :
+          <input type="text" name="label" [(ngModel)]="questionForm.label" required/>
+        </label>
+        <input class="btn" type="submit" [disabled]="questionForm.form.invalid" value="Register"/>
+      </form>
+    </div>
+  </ng-container>
+
+</div>
